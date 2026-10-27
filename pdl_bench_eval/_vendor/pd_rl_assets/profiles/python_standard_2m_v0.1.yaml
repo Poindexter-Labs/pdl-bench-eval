@@ -1,0 +1,96 @@
+profile_id: python_standard_2m_v0.1
+status: approved
+target_contract: evaluation_contract_v0.2
+
+# 2M-budget sibling of python_standard_1m_v0.1. Everything below is copied
+# from that profile except agent_budget (see the notes there). Same
+# interpreter, same pinned image digest, same resources.
+#
+# NAMING: same reasoning as the 1M profile — deliberately NOT
+# python_standard_v0.3. P1-002 reserves the python_standard_v0.x line for the
+# Python 3.12 episode-image migration, which is a different change to the
+# same family and still open. This is the larger-runway family: 3.12, same
+# digest, more budget.
+#
+# PURPOSE: the consolidated re-run of the runway-bound contributor tasks.
+# Tasks 02 v2 (11/12 walled), 03 (12/12) and 07 (7/12) all hit
+# token_budget_reached at 1M, so their recorded scores conflate "could not
+# solve it" with "ran out of runway". These tasks are TRAINING data for a lab
+# (ruling 2026-08-15), which makes a complete recorded attempt the deliverable
+# — a wall-terminated trajectory is a truncated artefact, not a result.
+# Doubling the budget is the direct test of which of the two we measured.
+
+ecosystem:
+  language: python
+  python_version: "3.12"
+  # Registry manifest-list digest (linux/amd64 + linux/arm64) of:
+  # europe-west2-docker.pkg.dev/poindexter-labs-rl-environment/pdl-images/python-standard:0.4
+  # Identical image to python_standard_v0.1 and _1m_v0.1 — this profile
+  # changes budget only, so episodes remain byte-comparable on environment.
+  base_image_digest: sha256:e0cb073aa3e73a02a9cbe5ba75fa73f4c82a4fc00bbd90241fab022d081b8560
+  dependency_install:
+    mode: offline
+    mechanism: prebuilt_wheel_cache
+    wheel_cache_path: /opt/wheels
+    setup_env:
+      PIP_NO_INDEX: "1"
+      PIP_FIND_LINKS: /opt/wheels
+
+  evaluator_env:
+    PYTHONPATH: /workspace/repo
+
+  workspace_ignore:
+    - "__pycache__/"
+    - "*.pyc"
+    - ".pytest_cache/"
+    - ".git/"
+
+agent_budget:
+  # TURNS ARE AT THE CONTRACT'S HARD CEILING (200) AND CANNOT SCALE WITH THE
+  # BUDGET. That is fine here, and measured: across the 1M probes on tasks 02
+  # v2, 03, 04, 06 and 07, models used 14-61 tool calls against the 1M
+  # profile's 160-turn / 640-call ceiling. Not one cell has ever terminated on
+  # max_turns_reached under the 1M profile. The single observed turn-wall
+  # (gpt-5.6-sol at 55 calls, 2026-08-15) was under the 1M *rider*, which
+  # raised tokens against python_standard_v0.1's 40-turn cap. Turns have
+  # never been the binding constraint once they were scaled; tokens have.
+  max_turns: 200
+  max_tool_calls: 1280
+  max_shell_commands: 640
+  max_tokens_total: 2000000
+
+timing:
+  # THE CLOCK CANNOT SCALE EITHER: absolute_episode_timeout_minutes is capped
+  # at 180 by BOTH the contract (hard_safety_ceilings.max_episode_timeout_
+  # minutes) and profile.schema.json, and the 1M profile already sits at that
+  # ceiling. Raising it would require a contract amendment.
+  #
+  # MEASURED: THIS IS NOT A BINDING CONSTRAINT. Wall time on the 1M probes ran
+  # 4.4-12.9 minutes per episode (task_06 4.8-12.9, task_07 4.8-8.7),
+  # including cells that spent their entire 1M budget. Doubling the token
+  # budget should land episodes well inside 30 minutes against a 150-minute
+  # agent window — an order of magnitude of headroom. If a future profile goes
+  # much beyond 2M, re-measure before assuming the clock still has room.
+  setup_timeout_minutes: 15
+  agent_timeout_minutes: 150
+  evaluator_timeout_minutes: 15
+  # P1-049: one test that never returns no longer voids the episode — it fails
+  # alone after this many seconds and the rest of the suite runs. Measured
+  # 2026-10-15 on the reference solutions of all 20 Misconception V2 SWE and
+  # Cybersecurity tasks: the slowest single test took 1.67s (cyber task 06);
+  # 60s leaves ~36x headroom for slower evaluator CPUs.
+  per_test_timeout_seconds: 60
+  absolute_episode_timeout_minutes: 180
+
+resources:
+  cpu: 4
+  memory_gib: 16
+  writable_disk_gib: 30
+  max_processes: 256
+
+terminal_limits:
+  default_command_timeout_seconds: 120
+  long_command_timeout_seconds: 600
+  max_command_output_to_agent_kib: 64
+  max_file_read_kib: 256
+  max_patch_mib: 5

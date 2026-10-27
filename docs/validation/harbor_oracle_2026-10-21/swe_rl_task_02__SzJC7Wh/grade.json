@@ -1,0 +1,24 @@
+{
+ "reward": 1.0,
+ "outcome": "valid_scored",
+ "passed": true,
+ "hidden_tests_passed": 16,
+ "hidden_tests_total": 16,
+ "regression_test_fraction": 1.0,
+ "build_quality": 1.0,
+ "build_rc": 0,
+ "public_tests_passed": 66,
+ "public_tests_total": 66,
+ "changed_files": [
+  "src/allocate.py",
+  "src/orders.py",
+  "src/pricing.py",
+  "src/promotions/base.py",
+  "src/promotions/item_level.py",
+  "src/promotions/order_level.py",
+  "src/receipt.py",
+  "src/units.py"
+ ],
+ "notes": [],
+ "scoring_policy": "scoring_v0.2"
+}

@@ -1,0 +1,206 @@
+{
+ "evaluator": "pdl-bench-eval/0.1.0",
+ "replayed": "2026-10-21",
+ "tasks": {
+  "contributor_task_01": {
+   "bench": "software_delivery",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 60,
+   "public_total": 53,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.0,
+   "baseline_hidden_passed": 0,
+   "note": null
+  },
+  "contributor_task_03": {
+   "bench": "software_delivery",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 34,
+   "public_total": 46,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.0,
+   "baseline_hidden_passed": 0,
+   "note": null
+  },
+  "contributor_task_04": {
+   "bench": "software_delivery",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 60,
+   "public_total": 50,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.0,
+   "baseline_hidden_passed": 0,
+   "note": null
+  },
+  "contributor_task_06": {
+   "bench": "software_delivery",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 48,
+   "public_total": 68,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.0,
+   "baseline_hidden_passed": 0,
+   "note": null
+  },
+  "contributor_task_07": {
+   "bench": "software_delivery",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 69,
+   "public_total": 74,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.0,
+   "baseline_hidden_passed": 0,
+   "note": null
+  },
+  "contributor_task_08": {
+   "bench": "software_delivery",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 93,
+   "public_total": 85,
+   "gold_reward_v0_2": null,
+   "baseline_reward_v0_2": 0.0,
+   "baseline_hidden_passed": 0,
+   "note": "gold.diff did not apply on calibration day; totals taken from the baseline run"
+  },
+  "contributor_task_09": {
+   "bench": "software_delivery",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 60,
+   "public_total": 50,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.0,
+   "baseline_hidden_passed": 0,
+   "note": null
+  },
+  "contributor_task_10": {
+   "bench": "software_delivery",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 60,
+   "public_total": 50,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.0,
+   "baseline_hidden_passed": 0,
+   "note": null
+  },
+  "pdl_swe_edit_merge_019": {
+   "bench": "software_delivery",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 29,
+   "public_total": 42,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.0,
+   "baseline_hidden_passed": 0,
+   "note": null
+  },
+  "swe_rl_cybersecurity_task_01": {
+   "bench": "cyber_operations",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 60,
+   "public_total": 50,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.0,
+   "baseline_hidden_passed": 0,
+   "note": null
+  },
+  "swe_rl_cybersecurity_task_02": {
+   "bench": "cyber_operations",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 60,
+   "public_total": 50,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.0,
+   "baseline_hidden_passed": 0,
+   "note": null
+  },
+  "swe_rl_cybersecurity_task_03": {
+   "bench": "cyber_operations",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 106,
+   "public_total": 50,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.122642,
+   "baseline_hidden_passed": 13,
+   "note": null
+  },
+  "swe_rl_cybersecurity_task_04": {
+   "bench": "cyber_operations",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 60,
+   "public_total": 50,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.0,
+   "baseline_hidden_passed": 0,
+   "note": null
+  },
+  "swe_rl_cybersecurity_task_05": {
+   "bench": "cyber_operations",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 60,
+   "public_total": 50,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.0,
+   "baseline_hidden_passed": 0,
+   "note": null
+  },
+  "swe_rl_cybersecurity_task_06": {
+   "bench": "cyber_operations",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 60,
+   "public_total": 50,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.0,
+   "baseline_hidden_passed": 0,
+   "note": null
+  },
+  "swe_rl_cybersecurity_task_07": {
+   "bench": "cyber_operations",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 60,
+   "public_total": 50,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.133333,
+   "baseline_hidden_passed": 8,
+   "note": null
+  },
+  "swe_rl_cybersecurity_task_08": {
+   "bench": "cyber_operations",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 60,
+   "public_total": 50,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.0,
+   "baseline_hidden_passed": 0,
+   "note": null
+  },
+  "swe_rl_cybersecurity_task_09": {
+   "bench": "cyber_operations",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 60,
+   "public_total": 50,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.0,
+   "baseline_hidden_passed": 0,
+   "note": null
+  },
+  "swe_rl_cybersecurity_task_10": {
+   "bench": "cyber_operations",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 60,
+   "public_total": 50,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.0,
+   "baseline_hidden_passed": 0,
+   "note": null
+  },
+  "swe_rl_task_02": {
+   "bench": "software_delivery",
+   "image": "pdl-bench/swe:1.0.0",
+   "hidden_total": 16,
+   "public_total": 66,
+   "gold_reward_v0_2": 1.0,
+   "baseline_reward_v0_2": 0.0,
+   "baseline_hidden_passed": 0,
+   "note": null
+  }
+ }
+}

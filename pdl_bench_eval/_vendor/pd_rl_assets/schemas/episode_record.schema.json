@@ -1,0 +1,490 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.poindexterlabs.ai/swe-rl/episode-record.schema.json",
+  "title": "Poindexter SWE RL Episode Record",
+  "description": "Validates one episode record emitted by the runner. Field names follow the contract's reproducibility.record vocabulary; the guide's Phase 8 BigQuery names map as image_digest -> environment_image_digest and seed -> random_seed at export time. Includes the outcome taxonomy (DEC-008). Metric fields are nullable/optional because void episodes are not scored.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "episode_id",
+    "task_id",
+    "task_version",
+    "model_provider",
+    "model_name",
+    "model_version",
+    "model_parameters",
+    "prompt_version",
+    "tool_schema_version",
+    "environment_image_digest",
+    "evaluator_version",
+    "evaluator_image_digest",
+    "scoring_version",
+    "benchmark_profile_id",
+    "random_seed",
+    "start_time",
+    "end_time",
+    "outcome",
+    "termination_reason",
+    "trajectory_uri",
+    "logs_uri"
+  ],
+  "properties": {
+    "episode_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$"
+    },
+    "task_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "model_provider": {
+      "type": "string"
+    },
+    "model_name": {
+      "type": "string"
+    },
+    "model_version": {
+      "type": "string"
+    },
+    "model_parameters": {
+      "type": "object",
+      "description": "Sampling/config parameters the model ran with (e.g. temperature, top_p, max_output_tokens)."
+    },
+    "prompt_version": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+_v[0-9]+(\\.[0-9]+)?$",
+      "description": "Id of the prompt spec in prompts/ the adapter rendered (DEC-017)."
+    },
+    "tool_schema_version": {
+      "type": "string",
+      "pattern": "^tools_([a-z0-9]+_)*v[0-9]+\\.[0-9]+$",
+      "description": "A variant surface records its own id (tools_noexec_v0.1), which is how a no-code-execution episode is told from an exec one in the record: the profile and the contract also differ, but this field is the one that names the tools the agent actually had."
+    },
+    "environment_image_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "evaluator_version": {
+      "type": "string"
+    },
+    "evaluator_image_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "scoring_version": {
+      "type": "string",
+      "pattern": "^scoring_([a-z0-9]+_)*v[0-9]+(\\.[0-9]+)?$"
+    },
+    "benchmark_profile_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+_v[0-9]+\\.[0-9]+$"
+    },
+    "random_seed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "start_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "end_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "outcome": {
+      "type": "string",
+      "enum": [
+        "valid_scored",
+        "invalid_agent_fault",
+        "void_setup_failure",
+        "void_infra_failure",
+        "void_evaluator_failure"
+      ]
+    },
+    "termination_reason": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "agent_submits",
+        "max_turns_reached",
+        "token_budget_reached",
+        "wall_clock_timeout_reached",
+        "unrecoverable_agent_error",
+        "infrastructure_failure",
+        null
+      ]
+    },
+    "reward_total": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 1
+    },
+    "hidden_tests_passed": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "description": "Hidden tests passed. Null for judge-scored tasks, which have no hidden tests \u2014 see property_gate_passed."
+    },
+    "hidden_tests_total": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "regression_score": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 1
+    },
+    "build_quality_score": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 1
+    },
+    "tokens_in": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "tokens_out": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "tool_calls": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "model_cost": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "compute_cost": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "trajectory_uri": {
+      "type": "string"
+    },
+    "patch_uri": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "logs_uri": {
+      "type": "string"
+    },
+    "judge_model": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Pinned judge model for scoring_llm_* episodes; null for deterministic rows (P1-018). For a PANEL policy this is 'panel:<model>,<model>,...' so a panel row can never be mistaken for a single-judge row, and judge_panel carries the per-member breakdown."
+    },
+    "judge_model_version": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Judge model version string as reported by the provider at judgment time."
+    },
+    "judge_prompt_version": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Pinned judge prompt version from the scoring policy."
+    },
+    "judge_scores": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "description": "All k raw judge scores (reward = the policy's aggregation of these). Recorded so reporting can show the distribution, never a bare point score."
+    },
+    "judge_panel": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Per-member breakdown for judge-panel policies (scoring_llm_v0.2+); null for single-judge and deterministic rows. judge_scores stays the flat list the reward aggregates, so existing readers keep working; this field is what makes disagreement BETWEEN models legible rather than pooled into one spread.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "model",
+          "provider",
+          "scores"
+        ],
+        "properties": {
+          "model": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "endpoint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "model_version": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "scores": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "median": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "sandbox_backend": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "local",
+        "docker",
+        "k8s",
+        null
+      ],
+      "description": "Which sandbox executed the episode. Recorded because the digest fields cannot carry it: k8s pulls the profile's PINNED registry digest, docker builds the image locally and reports that build's id, and local returns a hash of the host OS and interpreter \u2014 all three shaped as 'sha256:<64 hex>'. Without this field a `local` dev run is indistinguishable from a gVisor benchmark row while carrying a digest-shaped value that is not an image digest. 'local' rows are dev runs, never benchmark results."
+    },
+    "pr_state": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true,
+      "description": "FrontierCode only; null for every other task family. What the agent left behind as a pull request, read at freeze. Load-bearing rather than informational: under merge-result scoring a correct fix left uncommitted and a genuinely empty episode both score the calibrated noop floor, and merge_status is the only thing that separates them after the fact.",
+      "properties": {
+        "branch_present": {
+          "type": "boolean"
+        },
+        "pushed": {
+          "type": "boolean"
+        },
+        "worktree_clean": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "commits_ahead": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "base_sha": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "head_sha": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "merge_status": {
+          "type": "string",
+          "enum": [
+            "clean",
+            "conflicted",
+            "no_branch"
+          ],
+          "description": "clean: the branch merged into the base and THAT tree was scored. conflicted / no_branch: the base tree was scored instead, which is the do-nothing condition."
+        },
+        "every_commit_green": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "null unless the task set require_commits_green (D-5). True iff every commit on the branch passes the public suite when checked out in turn."
+        },
+        "merge_error": {
+          "type": "string"
+        },
+        "base_moved": {
+          "type": "boolean",
+          "description": "The agent pushed to the base branch on origin. Recorded, never scored: the merge is built from a root-owned mirror of the staged base, so moving origin's base cannot change what is evaluated. Usually means the agent worked on the base branch instead of creating its own."
+        },
+        "worktree_hidden_passed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "worktree_hidden_total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "worktree_hidden_fraction": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "DIAGNOSTIC, NEVER SCORED. What the agent's final worktree would have scored, recorded only when it can differ from the tree actually evaluated. Separates 'solved it but did not deliver it' from 'did not solve it' \u2014 the reward cannot, since both land on the floor (and on exactly 0.0 under scoring_v0.2)."
+        }
+      }
+    },
+    "condition": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "t0",
+        "final",
+        "dynamic",
+        null
+      ],
+      "description": "DynamicSWE only (P1-038, DS-2); null for every other family. Which of the family's three evaluation conditions this episode ran: t0 (no upstream PR lands), final (every PR landed at stage time), dynamic (PRs land on trajectory triggers). A family's three conditions are paired measurements, never three samples."
+    },
+    "success": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "DynamicSWE only; null otherwise. The benchmark's headline (DS-9): the agent's branch merged cleanly into the evaluated base AND every applicable hidden group passed in full. Currency is recorded in upstream_state, not gated here. Distinct from reward_total, which is the scoring_dynswe_* gradient signal."
+    },
+    "upstream_state": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true,
+      "description": "DynamicSWE only; null otherwise (DS-13). The mechanical diagnostics: t0_sha, evaluated_base_sha, final_sha (when every PR landed), landed[] with fired-on evidence, unreached[] (DS-7), discovery[] (ordinary commands that revealed upstream), first_discovery_after, currency, reconciliation, hidden_by_group, overreaction_paths, tamper. Inferred categories (semantic interpretation, interaction detection, propagation) are annotation outside the runner and never appear here. Free-form object: mirrored to BigQuery as JSON, so a field can be added without a bq update."
+    },
+    "property_gate_passed": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "description": "Assertions passed by a judge-scored task's property gate. NOT tests and NOT scored: the gate checks that a deliverable exists and is structurally well-formed (file present, size floor, required headings), so a factually wrong answer can pass it in full. It is a validity gate; the reward comes from the judge panel. Null for deterministic tasks, which report hidden_tests_* instead."
+    },
+    "property_gate_total": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "judge_refusals": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Panel members that DECLINED to score this episode and were dropped, leaving the remaining members to score it. Null when no member refused. A row with refusals was scored by a smaller panel than the policy names, so it carries less of the between-model disagreement the panel exists to expose \u2014 do not pool it with full-panel rows without saying so.",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "model",
+          "reason"
+        ],
+        "properties": {
+          "model": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "const": "invalid_agent_fault"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "reward_total": {
+            "const": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "enum": [
+              "void_setup_failure",
+              "void_infra_failure",
+              "void_evaluator_failure"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "reward_total": {
+            "const": null
+          }
+        }
+      }
+    }
+  ]
+}

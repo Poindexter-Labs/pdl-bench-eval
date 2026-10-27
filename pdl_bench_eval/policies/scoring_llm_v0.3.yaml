@@ -1,0 +1,110 @@
+scoring_policy_id: scoring_llm_v0.3
+status: approved
+target_contract: evaluation_contract_v0.2
+
+# ITEMISED, ANCHORED CHECKPOINTS (P1-042 §1). The panel of v0.2 is kept; what
+# changes is the question it is asked. v0.2 hands each member the whole
+# rubric and takes ONE number back; v0.3 hands it N binary checkpoints, each
+# with a hidden ground-truth anchor, and takes N verdicts back. The reward is
+# the weighted mean of the per-item verdicts, each verdict the median of the
+# members' votes. Deterministic `rule` items (state_grader / doc_grader
+# checks on the evaluated tree) enter the same mean; a failed sanity-tier
+# rule item is a gate and zeroes the bucket.
+#
+# WHY (docs/sweqna-harbor-findings.md §2b): a holistic score cannot be both a
+# discriminative floor and a graded signal — a trivial answer with the right
+# headings "scores something", and tightening the floor drove pass@3 to 0.
+# Anchored binary items are both at once: a trivial answer fails every
+# anchored item, a partial answer passes some, and each verdict carries the
+# evidence it was decided on. The panel's disagreement becomes legible PER
+# ITEM instead of pooled into one spread. It is also what a Reward Kit
+# criterion is, so the delivered content floor and the reward become the
+# same artefact.
+#
+# WHAT IT READS: hidden/checkpoints.yaml when the task ships one; otherwise
+# the existing hidden/rubric.md, parsed into equal-weight llm items (weights
+# honoured where the rubric states them). No task migration is required to
+# run under this policy; anchors are what a task gains by authoring the YAML.
+#
+# GATES, deliberately narrow: only rule items may gate (tier: sanity). An LLM
+# verdict must never zero a task on its own — that would hand judge noise a
+# cliff. Rows under this policy are not comparable with v0.1/v0.2 rows
+# (P1-018): the number means something different.
+#
+# STATUS approved (Jacob, 2026-09-29, P1-043) on the local live smoke of
+# 2026-09-29 (P1-042 addendum): gold 1.0 / 0.9 / 1.0 and noop 0.0 on one
+# SWEQnA and two document tasks. Approved AHEAD of the full calibration the
+# draft named — the same gold/noop pass on the other judge-scored tasks and a
+# v0.2-vs-v0.3 comparison on a partial answer are still owed (TODO.md), and a
+# row whose calibration has not run should say so when it is reported.
+
+weights:
+  judge_checkpoints: 1.0
+
+buckets:
+  judge_checkpoints:
+    description: >
+      Weighted mean over every checkpoint of its item score. An llm item's
+      score is the median of the panel members' binary votes (1 met / 0 not
+      met), so with three members it is the majority and with two it can be
+      0.5 — a disputed item earns half, and the record shows the split. A
+      rule item's score is 1 or 0 from its deterministic check on the
+      evaluated tree. Sanity-tier rule items are gates: they sit OUTSIDE the
+      mean and can only zero it — "the rows you were not asked to touch are
+      unchanged" is true of an empty episode, and crediting it would hand
+      the do-nothing agent the floor DEC-028 removed. Noop scores exactly 0.
+    sub_score: sum(weight_i * item_score_i) / sum(weight_i) over non-gate items, or 0 if a gate failed
+
+empty_bucket_policy:
+  mode: renormalize
+  description: >
+    A task with no loadable checkpoints (no checkpoints.yaml and no
+    parseable rubric.md) has zero scorable buckets under this policy — the
+    episode voids as evaluator failure rather than scoring 0.
+  zero_scorable_buckets: task_invalid
+
+applies_only_to_valid_episodes: true
+
+judge:
+  mode: checkpoints
+  # Reference panel. In the reference runs gemini-3.1-pro-preview was served by Vertex AI
+  # (global), claude-opus-5 by the Anthropic API and gpt-5.6-sol by Azure OpenAI (AI Foundry
+  # v1 surface); any endpoint serving the same model ids reproduces the recorded rewards.
+  panel:
+    - provider: google
+      model: gemini-3.1-pro-preview
+    - provider: anthropic
+      model: claude-opus-5
+    - provider: openai
+      model: gpt-5.6-sol
+  # One call per member decides EVERY llm item at once (the members see the
+  # same brief, the same anchors and the same extracted deliverables); k is
+  # calls per member, not verdicts.
+  k: 1
+  endpoint: panel
+  aggregation: item_median
+  judge_prompt_version: judge_prompt_v0.2
+  system_prompt: >
+    You are an expert evaluator checking a professional work deliverable
+    against a list of objective checkpoints. Each checkpoint has a yes/no
+    question and, where given, the ground truth the deliverable must match.
+    Judge every checkpoint independently and strictly: it PASSES only if the
+    deliverable states the thing in substance, with the right figures, names
+    and scope; it FAILS if the deliverable merely gestures at it, leaves it
+    implicit, states it alongside a contradictory claim, or if the evidence
+    is missing or truncated. Never award partial credit within a checkpoint
+    and never infer what the deliverable does not say. Respond with JSON
+    only: an object with key "results", a list containing one object per
+    checkpoint id with keys "id" (string, exactly as given), "pass"
+    (boolean) and "evidence" (a short quote or reason, under 40 words).
+  user_template: |
+    # Task brief given to the worker
+    {brief}
+
+    # Checkpoints (authoritative; the worker never saw the ground truth)
+    {checkpoints}
+
+    # Deliverable content (extracted)
+    {deliverables}
+
+    Decide every checkpoint id listed above. Return JSON only.

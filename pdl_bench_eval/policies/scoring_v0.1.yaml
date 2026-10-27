@@ -1,0 +1,43 @@
+scoring_policy_id: scoring_v0.1
+status: approved
+target_contract: evaluation_contract_v0.2
+
+# Final episode score = weighted sum of per-bucket sub-scores, each in [0, 1].
+# Weights must sum to 1.0 across the buckets that are present for a task.
+weights:
+  hidden_test_fraction: 0.80
+  regression_test_fraction: 0.15
+  build_quality: 0.05
+
+buckets:
+  hidden_test_fraction:
+    description: >
+      Fraction of hidden tests that pass after the agent's patch is applied
+      and the evaluator runs. Primary signal of task success.
+    sub_score: passed_hidden_tests / total_hidden_tests
+
+  regression_test_fraction:
+    description: >
+      Fraction of the pre-existing public/regression suite that still passes
+      after the patch. Penalizes fixes that break unrelated behavior.
+    sub_score: passed_regression_tests / total_regression_tests
+
+  build_quality:
+    description: >
+      Normalized [0, 1] result of the build/quality gate defined by the task
+      manifest's evaluation.build_command (e.g. compile, type-check, lint).
+      A task without a build_command has no build_quality bucket and the
+      empty_bucket_policy applies (DEC-012).
+    sub_score: build_quality_gate_result
+
+# Handling for tasks that lack a bucket (e.g. no regression suite, no build gate).
+empty_bucket_policy:
+  mode: renormalize
+  description: >
+    If a bucket is absent for a task, drop it and renormalize the remaining
+    weights so they sum to 1.0. A task with zero scorable buckets is treated
+    as invalid, not as a zero score.
+  zero_scorable_buckets: task_invalid
+
+# A score is only produced for episodes the contract marks valid.
+applies_only_to_valid_episodes: true

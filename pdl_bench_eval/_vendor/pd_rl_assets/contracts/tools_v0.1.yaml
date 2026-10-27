@@ -1,0 +1,84 @@
+tool_schema_id: tools_v0.1
+status: approved
+target_contract: evaluation_contract_v0.2
+
+# The model-agnostic tool vocabulary the agent adapter exposes. Each tool's
+# `parameters` is a JSON Schema (Draft 2020-12) the adapter uses to validate a
+# tool call before executing it. `restrictions` are enforced by the sandbox.
+tools:
+  read_file:
+    purpose: Inspect a file in the repository or workspace.
+    terminal: false
+    parameters:
+      type: object
+      additionalProperties: false
+      required: [path]
+      properties:
+        path:
+          type: string
+          description: Workspace-relative path to read.
+        max_bytes:
+          type: integer
+          minimum: 1
+          description: Truncate output beyond this many bytes.
+    restrictions:
+      - path_allowlist
+      - output_limit
+
+  search:
+    purpose: Search for symbols or text within the repository.
+    terminal: false
+    parameters:
+      type: object
+      additionalProperties: false
+      required: [query]
+      properties:
+        query:
+          type: string
+        max_results:
+          type: integer
+          minimum: 1
+    restrictions:
+      - repository_only
+
+  write_patch:
+    purpose: Apply a structured change to the writable workspace.
+    terminal: false
+    parameters:
+      type: object
+      additionalProperties: false
+      required: [patch]
+      properties:
+        patch:
+          type: string
+          description: Unified diff applied to the workspace.
+    restrictions:
+      - workspace_only
+
+  shell:
+    purpose: Run a test or build command in a fresh non-interactive shell.
+    terminal: false
+    parameters:
+      type: object
+      additionalProperties: false
+      required: [command]
+      properties:
+        command:
+          type: string
+        timeout_seconds:
+          type: integer
+          minimum: 1
+          description: Overrides the profile default, up to the long-command limit.
+    restrictions:
+      - timeout
+      - process_limit
+      - no_network
+
+  submit:
+    purpose: End the episode and trigger the hidden evaluator.
+    terminal: true
+    parameters:
+      type: object
+      additionalProperties: false
+      properties: {}
+    restrictions: []

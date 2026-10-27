@@ -1,0 +1,310 @@
+{
+  "benchmark": "cyber-operations",
+  "generated_at": "2026-10-27T12:38:44Z",
+  "source": "BigQuery `poindexter-labs-rl-environment.pdl_rl.episodes`; every episode record carries these fields, so counts are exact, not reconstructed.",
+  "tasks": 10,
+  "published_jobs": {
+    "executable": [
+      "rlj-20260911-181246-68ed7c",
+      "rlj-20260925-210731-44bc8a",
+      "rlj-20261013-232626-6fc6bd"
+    ]
+  },
+  "basis": "The default preset reproduces the configurations behind the published report: profile, prompt, tool schema and scoring policy as recorded on those jobs' episodes. Earlier configurations (other scoring policies, image digests or sandboxes) are listed here as evidence and are not pooled with the published numbers.",
+  "warning": "Counts include every episode recorded under the two published profiles, including probes and re-runs that are not part of the published report. The published report is the subset under the published jobs.",
+  "query": "SELECT task_id, benchmark_profile_id, prompt_version, tool_schema_version, scoring_version, evaluator_version, model_provider, model_name, TO_JSON_STRING(model_parameters) AS model_parameters, sandbox_backend, environment_image_digest, COUNT(*) AS episodes, COUNTIF(outcome = 'valid_scored') AS valid_scored, COUNTIF(outcome LIKE 'invalid%') AS invalid, COUNTIF(outcome LIKE 'void%') AS void, COUNTIF(outcome = 'valid_scored' AND reward_total > 0.95) AS passes, FORMAT_TIMESTAMP('%Y-%m-%dT%H:%M:%SZ', MIN(start_time)) AS first_start, FORMAT_TIMESTAMP('%Y-%m-%dT%H:%M:%SZ', MAX(end_time)) AS last_end FROM `poindexter-labs-rl-environment.pdl_rl.episodes` WHERE task_id IN ('chronicle_versioned_escalation_001','contributor_task_01','contributor_task_03','contributor_task_04','contributor_task_06','contributor_task_07','contributor_task_08','contributor_task_09','contributor_task_10','pdl_qna_access_path_planning_017','pdl_qna_close_provenance_010','pdl_qna_coldchain_journal_replay_006','pdl_qna_incremental_build_promotion_015','pdl_qna_quota_escrow_012','pdl_qna_retry_compat_011','pdl_qna_selector_normalization_013','pdl_qna_signed_package_resolution_014','pdl_qna_stow_hold_release_016','pdl_swe_edit_merge_019','swe_rl_cybersecurity_task_01','swe_rl_cybersecurity_task_02','swe_rl_cybersecurity_task_03','swe_rl_cybersecurity_task_04','swe_rl_cybersecurity_task_05','swe_rl_cybersecurity_task_06','swe_rl_cybersecurity_task_07','swe_rl_cybersecurity_task_08','swe_rl_cybersecurity_task_09','swe_rl_cybersecurity_task_10','swe_rl_task_02') AND benchmark_profile_id IN ('python_standard_2m_v0.1','python_qa_2m_v0.1') AND (condition IS NULL OR condition = '') GROUP BY 1,2,3,4,5,6,7,8,9,10,11 ORDER BY task_id, model_name, first_start",
+  "observed_runs": [
+    {
+      "config": {
+        "benchmark_profile_id": "python_standard_2m_v0.1",
+        "environment_image_digest": "sha256:e0cb073aa3e73a02a9cbe5ba75fa73f4c82a4fc00bbd90241fab022d081b8560",
+        "evaluator_version": "pd-rl-runner-0.1",
+        "model_name": "claude-fable-5-1",
+        "model_parameters": {
+          "max_tokens": 8192,
+          "prompt_cache": "ephemeral"
+        },
+        "model_provider": "anthropic:api",
+        "prompt_version": "agent_prompt_v0.3",
+        "sandbox_backend": "k8s",
+        "scoring_version": "scoring_v0.2",
+        "tool_schema_version": "tools_v0.1"
+      },
+      "episodes": 80,
+      "valid_scored": 74,
+      "invalid": 0,
+      "void": 6,
+      "passes": 11,
+      "tasks": 10,
+      "first_start": "2026-09-11T18:37:32Z",
+      "last_end": "2026-09-12T01:57:26Z"
+    },
+    {
+      "config": {
+        "benchmark_profile_id": "python_standard_2m_v0.1",
+        "environment_image_digest": "sha256:e0cb073aa3e73a02a9cbe5ba75fa73f4c82a4fc00bbd90241fab022d081b8560",
+        "evaluator_version": "pd-rl-runner-0.1",
+        "model_name": "claude-opus-5",
+        "model_parameters": {
+          "max_tokens": 8192,
+          "prompt_cache": "ephemeral",
+          "vertex_project": "poindexter-labs-rl-environment"
+        },
+        "model_provider": "anthropic-vertex:global",
+        "prompt_version": "agent_prompt_v0.3",
+        "sandbox_backend": "k8s",
+        "scoring_version": "scoring_v0.2",
+        "tool_schema_version": "tools_v0.1"
+      },
+      "episodes": 21,
+      "valid_scored": 20,
+      "invalid": 0,
+      "void": 1,
+      "passes": 5,
+      "tasks": 10,
+      "first_start": "2026-09-03T20:42:42Z",
+      "last_end": "2026-09-04T04:35:03Z"
+    },
+    {
+      "config": {
+        "benchmark_profile_id": "python_standard_2m_v0.1",
+        "environment_image_digest": "sha256:e0cb073aa3e73a02a9cbe5ba75fa73f4c82a4fc00bbd90241fab022d081b8560",
+        "evaluator_version": "pd-rl-runner-0.1",
+        "model_name": "claude-opus-5-5",
+        "model_parameters": {
+          "max_tokens": 8192,
+          "prompt_cache": "ephemeral"
+        },
+        "model_provider": "anthropic:api",
+        "prompt_version": "agent_prompt_v0.3",
+        "sandbox_backend": "k8s",
+        "scoring_version": "scoring_v0.2",
+        "tool_schema_version": "tools_v0.1"
+      },
+      "episodes": 88,
+      "valid_scored": 79,
+      "invalid": 0,
+      "void": 9,
+      "passes": 11,
+      "tasks": 10,
+      "first_start": "2026-09-25T22:04:14Z",
+      "last_end": "2026-10-15T11:57:38Z"
+    },
+    {
+      "config": {
+        "benchmark_profile_id": "python_standard_2m_v0.1",
+        "environment_image_digest": "sha256:e0cb073aa3e73a02a9cbe5ba75fa73f4c82a4fc00bbd90241fab022d081b8560",
+        "evaluator_version": "pd-rl-runner-0.1",
+        "model_name": "gemini-3.6-flash",
+        "model_parameters": {
+          "temperature": 1
+        },
+        "model_provider": "google-vertex:global",
+        "prompt_version": "agent_prompt_v0.3",
+        "sandbox_backend": "k8s",
+        "scoring_version": "scoring_v0.2",
+        "tool_schema_version": "tools_v0.1"
+      },
+      "episodes": 63,
+      "valid_scored": 52,
+      "invalid": 0,
+      "void": 11,
+      "passes": 4,
+      "tasks": 10,
+      "first_start": "2026-09-03T20:42:42Z",
+      "last_end": "2026-09-04T04:25:01Z"
+    },
+    {
+      "config": {
+        "benchmark_profile_id": "python_standard_2m_v0.1",
+        "environment_image_digest": "sha256:e0cb073aa3e73a02a9cbe5ba75fa73f4c82a4fc00bbd90241fab022d081b8560",
+        "evaluator_version": "pd-rl-runner-0.1",
+        "model_name": "gemini-3.7-flash",
+        "model_parameters": {
+          "temperature": 1
+        },
+        "model_provider": "google-vertex:global",
+        "prompt_version": "agent_prompt_v0.3",
+        "sandbox_backend": "k8s",
+        "scoring_version": "scoring_v0.2",
+        "tool_schema_version": "tools_v0.1"
+      },
+      "episodes": 66,
+      "valid_scored": 47,
+      "invalid": 0,
+      "void": 19,
+      "passes": 8,
+      "tasks": 10,
+      "first_start": "2026-09-03T20:42:42Z",
+      "last_end": "2026-09-04T14:06:05Z"
+    },
+    {
+      "config": {
+        "benchmark_profile_id": "python_standard_2m_v0.1",
+        "environment_image_digest": "sha256:e0cb073aa3e73a02a9cbe5ba75fa73f4c82a4fc00bbd90241fab022d081b8560",
+        "evaluator_version": "pd-rl-runner-0.1",
+        "model_name": "gemini-3.8-flash",
+        "model_parameters": {
+          "temperature": 1
+        },
+        "model_provider": "google-vertex:global",
+        "prompt_version": "agent_prompt_v0.3",
+        "sandbox_backend": "k8s",
+        "scoring_version": "scoring_v0.2",
+        "tool_schema_version": "tools_v0.1"
+      },
+      "episodes": 80,
+      "valid_scored": 72,
+      "invalid": 0,
+      "void": 8,
+      "passes": 0,
+      "tasks": 10,
+      "first_start": "2026-09-11T18:26:06Z",
+      "last_end": "2026-09-12T01:53:18Z"
+    },
+    {
+      "config": {
+        "benchmark_profile_id": "python_standard_2m_v0.1",
+        "environment_image_digest": "sha256:e0cb073aa3e73a02a9cbe5ba75fa73f4c82a4fc00bbd90241fab022d081b8560",
+        "evaluator_version": "pd-rl-runner-0.1",
+        "model_name": "gemini-4-argon",
+        "model_parameters": {
+          "temperature": 1
+        },
+        "model_provider": "google-vertex:global",
+        "prompt_version": "agent_prompt_v0.3",
+        "sandbox_backend": "k8s",
+        "scoring_version": "scoring_v0.2",
+        "tool_schema_version": "tools_v0.1"
+      },
+      "episodes": 85,
+      "valid_scored": 74,
+      "invalid": 0,
+      "void": 11,
+      "passes": 7,
+      "tasks": 10,
+      "first_start": "2026-10-14T01:02:09Z",
+      "last_end": "2026-10-14T20:09:44Z"
+    },
+    {
+      "config": {
+        "benchmark_profile_id": "python_standard_2m_v0.1",
+        "environment_image_digest": "sha256:e0cb073aa3e73a02a9cbe5ba75fa73f4c82a4fc00bbd90241fab022d081b8560",
+        "evaluator_version": "pd-rl-runner-0.1",
+        "model_name": "gold",
+        "model_parameters": {},
+        "model_provider": "scripted",
+        "prompt_version": "scripted_v0",
+        "sandbox_backend": "k8s",
+        "scoring_version": "scoring_v0.1",
+        "tool_schema_version": "tools_v0.1"
+      },
+      "episodes": 54,
+      "valid_scored": 54,
+      "invalid": 0,
+      "void": 0,
+      "passes": 54,
+      "tasks": 10,
+      "first_start": "2026-09-03T20:32:59Z",
+      "last_end": "2026-10-15T11:46:33Z"
+    },
+    {
+      "config": {
+        "benchmark_profile_id": "python_standard_2m_v0.1",
+        "environment_image_digest": "sha256:e0cb073aa3e73a02a9cbe5ba75fa73f4c82a4fc00bbd90241fab022d081b8560",
+        "evaluator_version": "pd-rl-runner-0.1",
+        "model_name": "gpt-5.6-sol",
+        "model_parameters": {
+          "api_mode": "responses",
+          "sampling": "provider-default"
+        },
+        "model_provider": "openai-azure:swedencentral",
+        "prompt_version": "agent_prompt_v0.3",
+        "sandbox_backend": "k8s",
+        "scoring_version": "scoring_v0.2",
+        "tool_schema_version": "tools_v0.1"
+      },
+      "episodes": 21,
+      "valid_scored": 20,
+      "invalid": 0,
+      "void": 1,
+      "passes": 3,
+      "tasks": 10,
+      "first_start": "2026-09-03T20:42:49Z",
+      "last_end": "2026-09-04T04:21:56Z"
+    },
+    {
+      "config": {
+        "benchmark_profile_id": "python_standard_2m_v0.1",
+        "environment_image_digest": "sha256:e0cb073aa3e73a02a9cbe5ba75fa73f4c82a4fc00bbd90241fab022d081b8560",
+        "evaluator_version": "pd-rl-runner-0.1",
+        "model_name": "gpt-6-astra",
+        "model_parameters": {
+          "api_mode": "responses",
+          "sampling": "provider-default"
+        },
+        "model_provider": "openai-azure:swedencentral",
+        "prompt_version": "agent_prompt_v0.3",
+        "sandbox_backend": "k8s",
+        "scoring_version": "scoring_v0.2",
+        "tool_schema_version": "tools_v0.1"
+      },
+      "episodes": 80,
+      "valid_scored": 76,
+      "invalid": 0,
+      "void": 4,
+      "passes": 14,
+      "tasks": 10,
+      "first_start": "2026-09-11T18:26:19Z",
+      "last_end": "2026-09-12T02:00:54Z"
+    },
+    {
+      "config": {
+        "benchmark_profile_id": "python_standard_2m_v0.1",
+        "environment_image_digest": "sha256:e0cb073aa3e73a02a9cbe5ba75fa73f4c82a4fc00bbd90241fab022d081b8560",
+        "evaluator_version": "pd-rl-runner-0.1",
+        "model_name": "noop",
+        "model_parameters": {},
+        "model_provider": "scripted",
+        "prompt_version": "scripted_v0",
+        "sandbox_backend": "k8s",
+        "scoring_version": "scoring_v0.1",
+        "tool_schema_version": "tools_v0.1"
+      },
+      "episodes": 54,
+      "valid_scored": 54,
+      "invalid": 0,
+      "void": 0,
+      "passes": 0,
+      "tasks": 10,
+      "first_start": "2026-09-03T20:35:18Z",
+      "last_end": "2026-10-15T11:46:52Z"
+    },
+    {
+      "config": {
+        "benchmark_profile_id": "python_standard_2m_v0.1",
+        "environment_image_digest": "sha256:e0cb073aa3e73a02a9cbe5ba75fa73f4c82a4fc00bbd90241fab022d081b8560",
+        "evaluator_version": "pd-rl-runner-0.1",
+        "model_name": "xai/grok-4.3",
+        "model_parameters": {
+          "api_mode": "chat_completions",
+          "auth": "gcloud-access-token",
+          "sampling": "provider-default"
+        },
+        "model_provider": "openai-compat:aiplatform.googleapis.com",
+        "prompt_version": "agent_prompt_v0.3",
+        "sandbox_backend": "k8s",
+        "scoring_version": "scoring_v0.2",
+        "tool_schema_version": "tools_v0.1"
+      },
+      "episodes": 51,
+      "valid_scored": 43,
+      "invalid": 0,
+      "void": 8,
+      "passes": 0,
+      "tasks": 10,
+      "first_start": "2026-09-03T20:42:42Z",
+      "last_end": "2026-09-04T02:11:10Z"
+    }
+  ]
+}

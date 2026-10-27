@@ -1,0 +1,120 @@
+profile_id: python_qa_2m_v0.1
+status: approved
+target_contract: evaluation_contract_v0.2
+
+# SWEQnA profile: codebase question-answering, judge-scored
+# (docs/sweqna-env-scoping.md).
+#
+# 2M sibling of python_qa_1m_v0.1: budget and timing only, same image
+# digest, so episodes stay byte-comparable on environment.
+#
+# WHEN TO USE: a question whose evidence is spread across many modules, where
+# the 1M profile shows episodes terminating on token_budget_reached rather
+# than agent_submits. Reading is what this family spends tokens on, so the
+# signal that a task needs this profile is budget exhaustion WITH a partial
+# answer already written, not a low judge score.
+#
+# REPLACES A MIS-INHERITANCE. The SWEQnA tasks were authored against
+# `document_standard_v0.1` because they reuse the document environment's
+# judge-scoring machinery. That profile is the SMALLEST in the repo — 300K
+# tokens and 40 turns — and it pins a LibreOffice/pandoc toolchain these tasks
+# never touch. A task whose entire job is reading `src/` and reasoning about
+# semantics inherited the tightest budget on the shelf, which is the leading
+# candidate for the 14 `token_budget_reached` zeros in
+# rlj-20260827-001515-b51ca2 (confirm against that job's recorded
+# benchmark_profile_id before treating it as settled).
+#
+# NAMING: <language>_<variant>_<budget>_v<x.y>, as python_standard_1m/_2m and
+# python_pr_5m established. "SWEQnA" is the customer's dataset name and lives
+# in datasets/pdl_sweqna_v0.1.yaml, not in platform artifact names.
+#
+# COMPARABILITY: rows under this profile are not comparable with any
+# document_standard row (different image, different budget) nor with any
+# python_standard row (judge scoring, no code change). Compare within a
+# profile.
+
+ecosystem:
+  language: python
+  # Fourth registry key. Without it these tasks are only orderable under
+  # `document` — where the console offers a LibreOffice profile and
+  # agent_prompt_doc_v0.1, a document-framed prompt for a task that must not
+  # produce a document — or under `swe`, whose prompts instruct the agent to
+  # resolve an issue by editing the repository, the exact opposite of the
+  # instruction. Neither key can express a correct SWEQnA order.
+  task_family: swe_qa
+  python_version: "3.12"
+  # python-standard PLUS PyYAML, derived from the same pinned digest every
+  # python_standard profile carries (docker/python-qa/Dockerfile). The scoping
+  # doc predicted no new image would be needed; verify-task disproved that —
+  # the property grader imports `yaml`, which document-standard supplied
+  # incidentally as part of its document stack and python-standard does not.
+  # The LibreOffice/pandoc/Noto stack these tasks never touched, and which
+  # verify-in-image was asserting for them, is gone either way.
+  base_image: python-qa
+  # Registry digest of
+  # europe-west2-docker.pkg.dev/poindexter-labs-rl-environment/pdl-images/python-qa:0.1
+  # pushed 2026-08-28 for linux/amd64.
+  base_image_digest: sha256:cf0659225c5b55098137417f5a7548b8e7001d84fbeec7f5b90606f167d40ea0
+  dependency_install:
+    mode: offline
+    mechanism: prebuilt_wheel_cache
+    wheel_cache_path: /opt/wheels
+    setup_env:
+      PIP_NO_INDEX: "1"
+      PIP_FIND_LINKS: /opt/wheels
+
+  evaluator_env:
+    PYTHONPATH: /workspace/repo
+
+  workspace_ignore:
+    - "__pycache__/"
+    - "*.pyc"
+    - ".pytest_cache/"
+    - ".git/"
+
+agent_budget:
+  # See the header note for when this profile is the right one. Turns are not
+  # expected to bind: this family has no edit/test/re-test loop, so turns are
+  # spent reading and tokens run out first.
+  max_turns: 200
+  max_tool_calls: 800
+  max_shell_commands: 400
+  max_tokens_total: 2000000
+
+timing:
+  # The 3-model judge panel runs in the RUNNER after the evaluator commands, so
+  # it is bounded by absolute_episode_timeout_minutes, not by
+  # evaluator_timeout_minutes.
+  setup_timeout_minutes: 15
+  agent_timeout_minutes: 180
+  evaluator_timeout_minutes: 15
+  absolute_episode_timeout_minutes: 240
+
+resources:
+  # HALVED from the document profile's 4 CPU / 16 GiB, deliberately. The work
+  # is reading files and writing one markdown file; nothing here compiles,
+  # renders or converts. The capacity argument is concrete: on the
+  # e2-standard-8 (8 vCPU / 32 GiB) episodes-gvisor pool, the document profile
+  # made the agent and evaluator pods unable to co-locate, so every SWEQnA
+  # episode occupied TWO nodes and paid two cold starts
+  # (docs/document-env-standard-scope.md §3). At 2 CPU / 8 GiB the pair fits on
+  # one node.
+  #
+  # writable_disk_gib is advisory on k8s: _main_resources hardcodes
+  # ephemeral-storage 10Gi request / 30Gi limit and ignores this field (known,
+  # docs/document-env-standard-scope.md §3). It is honoured on docker.
+  cpu: 2
+  memory_gib: 8
+  writable_disk_gib: 10
+  max_processes: 128
+
+terminal_limits:
+  # max_file_read_kib is the load-bearing one for this task family — the agent
+  # answers by reading source modules, so a low cap would truncate the very
+  # evidence the answer rests on. 256 KiB is the python_standard value and is
+  # generous per file.
+  default_command_timeout_seconds: 120
+  long_command_timeout_seconds: 600
+  max_command_output_to_agent_kib: 64
+  max_file_read_kib: 256
+  max_patch_mib: 5

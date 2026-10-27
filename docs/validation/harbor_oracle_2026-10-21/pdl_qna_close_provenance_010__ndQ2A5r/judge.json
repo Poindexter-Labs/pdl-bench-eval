@@ -1,0 +1,417 @@
+{
+ "judge_model": "panel:anthropic:claude-opus-5,openai:gpt-5.6-sol",
+ "judge_prompt_version": "judge_prompt_v0.2",
+ "judge_panel": [
+  {
+   "model": "claude-opus-5",
+   "provider": "anthropic",
+   "model_version": "claude-opus-5",
+   "score": 1.0
+  },
+  {
+   "model": "gpt-5.6-sol",
+   "provider": "openai",
+   "model_version": "gpt-5.6-sol-2026-07-09",
+   "score": 1.0
+  }
+ ],
+ "aggregated": 1.0,
+ "gate_failed": [],
+ "all_passed": true,
+ "disputed": [],
+ "items": [
+  {
+   "id": "R1",
+   "weight": 1.0,
+   "question": "Overall verdict MET when: The answer states that neither shortcut preserves production behaviour",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"Neither shortcut preserves production behavior.\"",
+    "gpt-5.6-sol": "\u201cNeither shortcut preserves production behavior.\u201d"
+   }
+  },
+  {
+   "id": "R2",
+   "weight": 1.0,
+   "question": "Recorded parents MET when: The answer states that omitted parents are the local tips and that both `east-accrual` and `approval-stop` record `approval-open` as their parent",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"Omitted parents mean the tips in the local copy at append time... whose recorded parent is `approval-open`.\"",
+    "gpt-5.6-sol": "States omitted parents are local tips and both sibling events have recorded parent `approval-open`."
+   }
+  },
+  {
+   "id": "R3",
+   "weight": 1.0,
+   "question": "Concurrent relationship MET when: The answer identifies `east-accrual` and `approval-stop` as concurrent siblings, with neither in the other's recorded causal past",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"`east-accrual` and `approval-stop` are concurrent siblings whose recorded parent is `approval-open`. Merging them later does not rewrite that ancestry.\"",
+    "gpt-5.6-sol": "Identifies `east-accrual` and `approval-stop` as \u201cconcurrent siblings\u201d sharing `approval-open`, so neither is in the other\u2019s causal past."
+   }
+  },
+  {
+   "id": "R4",
+   "weight": 1.0,
+   "question": "Production condition result MET when: The answer states that ancestor-scoped condition evaluation sees active `approval-open`, and therefore Desk stores `east-accrual.eligible = true` in production",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"The approval winner inside East's ancestry is therefore the active `approval-open`, making `east-accrual` eligible.\"",
+    "gpt-5.6-sol": "Says production examines the recorded ancestor closure, finds active `approval-open`, and makes `east-accrual` eligible."
+   }
+  },
+  {
+   "id": "R5",
+   "weight": 1.0,
+   "question": "Production resolution MET when: The answer states that AUDITOR `approval-stop` wins the approval slot over CONTROLLER `approval-open`, is then filtered because it is inactive, and the exact `resolved()` result is `(\"east-accrual\",)`",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"AUDITOR event `approval-stop` outranks the CONTROLLER event... It is inactive, so `resolved()` filters it out\"; returns only east-accrual.",
+    "gpt-5.6-sol": "States AUDITOR `approval-stop` outranks CONTROLLER `approval-open`, is filtered as inactive, and `resolved()` returns only `(\"east-accrual\",)`."
+   }
+  },
+  {
+   "id": "R6",
+   "weight": 1.0,
+   "question": "Production close amounts MET when: The answer gives `cash = 12` and `sales = -12` for both `jan-v1` and `jan-v2`, and attributes the additional 12 to EUR 10 converted at 1.20",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"the active accrual's EUR 10 debit and credit at 1.20, giving `cash = 12` and `sales = -12`\" for both closes.",
+    "gpt-5.6-sol": "Gives both closes `cash = 12`, `sales = -12`, from the EUR 10 accrual converted at 1.20."
+   }
+  },
+  {
+   "id": "R7",
+   "weight": 1.0,
+   "question": "Stop audit cause MET when: The answer states that, although the stop has no lines, changing the winning approval causes the audit logic to use the sorted union containing the old open winner's `cash` and `sales` accounts",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"`approval-stop` has no lines, but replacing `approval-open` still audits the old winner's `cash` and `sales` accounts.\"",
+    "gpt-5.6-sol": "Explains the line-free stop replaces the old winner and audits the sorted union, including old `approval-open` accounts `cash` and `sales`."
+   }
+  },
+  {
+   "id": "R8",
+   "weight": 1.0,
+   "question": "Mapping audit cause MET when: The answer states that every remap records the sorted old and new reporting targets, so restoring the mapping appends a second `cash` and `receivable` pair rather than erasing the first pair",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"Each remap audits the sorted set of the old and new reporting accounts, so both halves... add `cash` and `receivable`\"; not removed.",
+    "gpt-5.6-sol": "States each remap audits old and new targets, so both round-trip halves append `cash` and `receivable` rather than undoing prior audit rows."
+   }
+  },
+  {
+   "id": "R9",
+   "weight": 1.0,
+   "question": "Production cuts MET when: The answer gives post-merge audit sequence 13, `jan-v1.audit_cut = 13` and `jan-v2.audit_cut = 19`, and attributes the growth to two changes from each adjustment winner, four mapping changes and two FX changes",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "Sequence 7\u219213, three winner pairs, four mapping, two FX; cuts 13 and 19.",
+    "gpt-5.6-sol": "Gives post-merge sequence 13 and cuts 13 and 19, accounting for six winner changes, four mapping changes, and two FX changes."
+   }
+  },
+  {
+   "id": "R10",
+   "weight": 1.0,
+   "question": "Equal digests MET when: The answer states that the stored statement digests are equal because the mapping and FX value have both been restored before the amendment",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"The restored catalog makes the amendment's statement byte-for-byte equivalent for digest purposes, so the stored digests match.\"",
+    "gpt-5.6-sol": "States the stored digests match because restoring the mapping and rate restores an equivalent statement."
+   }
+  },
+  {
+   "id": "R11",
+   "weight": 1.0,
+   "question": "First close state MET when: The answer gives `jan-v1` lifecycle state `SUPERSEDED` and review state `REVIEW_REQUIRED`",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"`jan-v1` therefore has audit cut 13... lifecycle state `SUPERSEDED` and review state `REVIEW_REQUIRED`.\"",
+    "gpt-5.6-sol": "Gives `jan-v1` lifecycle `SUPERSEDED` and review state `REVIEW_REQUIRED`."
+   }
+  },
+  {
+   "id": "R12",
+   "weight": 1.0,
+   "question": "Amended close state MET when: The answer gives `jan-v2` lifecycle state `CURRENT` and review state `CURRENT`",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"`jan-v2` has audit cut 19... lifecycle state `CURRENT` and review state `CURRENT`.\"",
+    "gpt-5.6-sol": "Gives `jan-v2` lifecycle `CURRENT` and review state `CURRENT`."
+   }
+  },
+  {
+   "id": "R13",
+   "weight": 1.0,
+   "question": "Production review cause MET when: The answer states that relevant mapping and FX audit records remain after cut 13 despite restoring their values, while no relevant change follows cut 19",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"Rows 14 and 18 are already relevant to `jan-v1`, despite later restoration. No rows follow `jan-v2`'s cut.\"",
+    "gpt-5.6-sol": "Explains relevant mapping/FX audit rows remain after cut 13 despite restoration, while no rows follow `jan-v2`\u2019s cut 19."
+   }
+  },
+  {
+   "id": "R14",
+   "weight": 1.0,
+   "question": "Production list result MET when: The answer gives `(\"jan-v2\",)` as the result of the production `CURRENT`, `after=0`, `limit=1` list call",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"The production list call returns only `(\"jan-v2\",)`.\"",
+    "gpt-5.6-sol": "States the production list call returns `(\"jan-v2\",)`."
+   }
+  },
+  {
+   "id": "R15",
+   "weight": 1.0,
+   "question": "Shortcut lookup state MET when: The answer states that, after West is merged first, Desk's current approval row is inactive `approval-stop` when East is imported",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"Desk sees the current approval winner, `approval-stop`, while preparing East's event. Its inactive value fails the active condition\"",
+    "gpt-5.6-sol": "States West-first leaves current approval winner `approval-stop`, whose inactive value is consulted while preparing East\u2019s event."
+   }
+  },
+  {
+   "id": "R16",
+   "weight": 1.0,
+   "question": "Shortcut stored eligibility MET when: The answer gives Desk's stored `east-accrual.eligible = false` under the condition shortcut for the West-then-East merge, without later re-evaluation",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"Desk stores `east-accrual.eligible` as false\"; `_prepare` freezes eligibility.",
+    "gpt-5.6-sol": "Gives stored `east-accrual.eligible` as false under the West-then-East condition shortcut, with eligibility frozen during preparation."
+   }
+  },
+  {
+   "id": "R17",
+   "weight": 1.0,
+   "question": "Shortcut resolved IDs MET when: The answer gives `()` from `resolved()` and states that the approval winner is inactive while the ineligible accrual cannot win its slot",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"no active resolved event: `resolved(...)` returns `()`\"; \"The accrual slot emits no audit changes\" with stop inactive.",
+    "gpt-5.6-sol": "Gives `resolved(...)` as `()` because the approval winner is inactive and `east-accrual` is stored ineligible."
+   }
+  },
+  {
+   "id": "R18",
+   "weight": 1.0,
+   "question": "Shortcut amounts MET when: The answer gives `cash = 0` and `sales = 0` for both close revisions under the condition shortcut",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"Both closes contain zero for `cash` and zero for `sales`.\"",
+    "gpt-5.6-sol": "States both shortcut closes contain zero for `cash` and zero for `sales`."
+   }
+  },
+  {
+   "id": "R19",
+   "weight": 1.0,
+   "question": "Shortcut sequences and cuts MET when: The answer gives no accrual audit changes, post-merge audit sequence 11, `jan-v1.audit_cut = 11` and `jan-v2.audit_cut = 17` under the condition shortcut",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"accrual slot emits no audit changes, leaving the post-merge audit sequence at 11... close cuts are 11 and 17.\"",
+    "gpt-5.6-sol": "States no accrual audit changes, post-merge sequence 11, and close cuts 11 and 17."
+   }
+  },
+  {
+   "id": "R20",
+   "weight": 1.0,
+   "question": "Causal divergence MET when: The answer states that the condition shortcut substitutes the receiver's global current state for the event's recorded ancestor state and thereby makes stored eligibility depend on import order",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"confuses the receiver's present global winner with the state visible in an event's recorded causal past... eligibility depend on import order.\"",
+    "gpt-5.6-sol": "Says the shortcut substitutes the receiver\u2019s global present winner for recorded causal-past state, making immutable eligibility import-order dependent."
+   }
+  },
+  {
+   "id": "R21",
+   "weight": 1.0,
+   "question": "Digest classifications MET when: The answer gives `CURRENT` for both `jan-v1` and `jan-v2` when the digest shortcut is applied independently to the production history",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"the digest shortcut labels both `jan-v1` and `jan-v2` as `CURRENT`.\"",
+    "gpt-5.6-sol": "States the digest shortcut labels both `jan-v1` and `jan-v2` as `CURRENT` on production history."
+   }
+  },
+  {
+   "id": "R22",
+   "weight": 1.0,
+   "question": "Digest information loss MET when: The answer states that equal current and stored statement digests establish value equality but omit the intervening mapping and FX provenance retained after the first close's cut",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"A digest can establish value equality, but cannot establish that the inputs and transformations... were untouched\"; rows 14/18 relevant.",
+    "gpt-5.6-sol": "Explains equal digests prove restored value equality but lose the intervening mapping and FX history retained by immutable audit rows after the first cut."
+   }
+  },
+  {
+   "id": "R23",
+   "weight": 1.0,
+   "question": "Digest list result MET when: The answer gives `(\"jan-v1\",)` for the digest shortcut's `CURRENT`, `after=0`, `limit=1` list call on the production history",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"The same filtered list call returns `(\"jan-v1\",)`, not `(\"jan-v2\",)`.\"",
+    "gpt-5.6-sol": "States the digest-shortcut list call returns `(\"jan-v1\",)`."
+   }
+  },
+  {
+   "id": "R24",
+   "weight": 1.0,
+   "question": "List mechanism MET when: The answer states that the list scans in close-sequence order, does not exclude superseded lifecycle states, filters the derived review state, and applies the page limit after that filter",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"scans close sequence, does not discard superseded lifecycle rows, derives review state for every row, filters, and only then applies the limit.\"",
+    "gpt-5.6-sol": "States listing scans close sequence, retains superseded lifecycle rows, derives and filters review state, then applies the limit."
+   }
+  },
+  {
+   "id": "R25",
+   "weight": 1.0,
+   "question": "Adjustment source locations MET when: The answer locates parent selection in `Adjustments.append`, eligibility in `_prepare` and `_condition_matches`, winner and audit behaviour in `_resolve_slot`, and active filtering in `resolved`, all in `src/adjustments.py`",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "Lists `Adjustments.append`, `_prepare`, `_condition_matches`, `_resolve_slot`, `resolved` in src/adjustments.py.",
+    "gpt-5.6-sol": "Locates parent selection in `append`, eligibility in `_prepare`/`_condition_matches`, winner/audit behavior in `_resolve_slot`, and active filtering in `resolved`, all in `src/adjustments.py`."
+   }
+  },
+  {
+   "id": "R26",
+   "weight": 1.0,
+   "question": "Audit, catalog and close source locations MET when: The answer locates sequencing in `src/audit.py:record_change`, mapping and FX changes in `Catalog.map_local_account` and `Catalog.set_fx_rate`, statement evaluation in `Statements._preview`, and close behaviour in `Closes._save`, `Closes._digest`, `Closes._needs_review`, `Closes.amend` and `Closes.list`",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "Cites src/audit.py:record_change, Catalog.map_local_account/set_fx_rate, Statements._preview, Closes._save/_digest/_needs_review/amend/list.",
+    "gpt-5.6-sol": "Correctly locates `record_change`, catalog mapping/FX methods, `Statements._preview`, and all required `Closes` symbols in their repository-relative modules."
+   }
+  },
+  {
+   "id": "R27",
+   "weight": 1.0,
+   "question": "Reversed-order values MET when: Under the condition shortcut with East merged first, the answer gives stored eligibility `true`, resolved IDs `(\"east-accrual\",)`, both closes with `cash = 12` and `sales = -12`, post-merge sequence 13, and cuts 13 and 19",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "Boundary: eligible, (\"east-accrual\",), 12/-12, sequence 13, cuts 13 and 19.",
+    "gpt-5.6-sol": "For East-first, gives eligibility true, `(\"east-accrual\",)`, both closes at 12/-12, post-merge sequence 13, and cuts 13 and 19."
+   }
+  },
+  {
+   "id": "R28",
+   "weight": 1.0,
+   "question": "Reversed-order boundary MET when: The answer states that importing East while global `approval-open` is still active makes the shortcut happen to agree, while production consults the fixed ancestor closure and therefore gives the same eligibility and result in either import order",
+   "score": 1.0,
+   "votes": [
+    1.0,
+    1.0
+   ],
+   "evidence": {
+    "claude-opus-5": "\"the shortcut consults `approval-open` before West changes the global slot... remains in recorded ancestor closure under either merge order.\"",
+    "gpt-5.6-sol": "Explains East-first happens to see active `approval-open`, while production always uses the fixed ancestor closure and is invariant to either import order."
+   }
+  }
+ ],
+ "user_text_chars": 18662
+}

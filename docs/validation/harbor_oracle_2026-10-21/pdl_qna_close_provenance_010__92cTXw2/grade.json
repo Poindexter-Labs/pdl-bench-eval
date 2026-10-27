@@ -1,0 +1,39 @@
+{
+ "reward": 0.0,
+ "outcome": "invalid_agent_fault",
+ "changed_files": [
+  "answers/.gitkeep",
+  "requirements.lock",
+  "src/__init__.py",
+  "src/adjustments.py",
+  "src/audit.py",
+  "src/catalog.py",
+  "src/closes.py",
+  "src/database.py",
+  "src/eliminations.py",
+  "src/entries.py",
+  "src/errors.py",
+  "src/journals.py",
+  "src/models.py",
+  "src/service.py",
+  "src/statements.py",
+  "src/validation.py"
+ ],
+ "violations": [
+  "requirements.lock",
+  "src/__init__.py",
+  "src/adjustments.py",
+  "src/audit.py",
+  "src/catalog.py",
+  "src/closes.py",
+  "src/database.py",
+  "src/eliminations.py",
+  "src/entries.py",
+  "src/errors.py",
+  "src/journals.py",
+  "src/models.py",
+  "src/service.py",
+  "src/statements.py",
+  "src/validation.py"
+ ]
+}

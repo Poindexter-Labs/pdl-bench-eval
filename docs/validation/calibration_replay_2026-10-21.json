@@ -1,0 +1,866 @@
+{
+ "contributor_task_01": {
+  "bench": "software_delivery",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "d9529bbbcc0937a07f4e8badf3e65f3662b23dbabcc31f9d6f43384daf304d63",
+  "baseline": {
+   "public": {
+    "passed": 53,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 0,
+    "failed": 60
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.0,
+   "setup_failed": false,
+   "hidden_tail": "den-tests/test_retry_stale.py::RetryStaleTest::test_older_revision_after_newer_ignored\nFAILED ../hidden-tests/test_retry_stale.py::RetryStaleTest::test_retry_after_correction\nFAILED ../hidden-tests/test_retry_stale.py::RetryStaleTest::test_retry_does_not_change_other_shards\nFAILED ../hidden-tests/test_retry_stale.py::RetryStaleTest::test_retry_multiple_shards\nFAILED ../hidden-tests/test_retry_stale.py::RetryStaleTest::test_retry_same_revision_not_double_counted\nFAILED ../hidden-tests/test_retry_stale.py::RetryStaleTest::test_stale_revision_after_newer_is_ignored\n60 failed, 2 warnings in 0.17s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 53,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 60,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "...............             [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-_zqpfhxp'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n60 passed, 1 warning in 0.05s\n"
+  }
+ },
+ "contributor_task_03": {
+  "bench": "software_delivery",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "7acdab8f55444f2d3ea18c8a8ad8e824640ec591808d0ba3f84c39e1a779fe6c",
+  "baseline": {
+   "public": {
+    "passed": 46,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 0,
+    "failed": 34
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.0,
+   "setup_failed": false,
+   "hidden_tail": "_even_if_the_route_is_restored\nFAILED ../hidden-tests/test_relevant_ticket_fences.py::test_only_the_path_through_the_first_override_is_fenced\nFAILED ../hidden-tests/test_relevant_ticket_fences.py::test_pool_history_respects_the_first_override_barrier\nFAILED ../hidden-tests/test_relevant_ticket_fences.py::test_override_history_is_scoped_to_the_reserved_path\nFAILED ../hidden-tests/test_relevant_ticket_fences.py::test_removing_a_ticket_barrier_is_relevant\nFAILED ../hidden-tests/test_relevant_ticket_fences.py::test_relevant_ticket_history_survives_database_reopening\n34 failed, 2 warnings in 1.13s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 46,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 34,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "                            [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-z2afc8qx'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n34 passed, 1 warning in 1.13s\n"
+  }
+ },
+ "contributor_task_04": {
+  "bench": "software_delivery",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "0331dd4c4b7e701715b31031546d0026afbb302940d7c6c7092fcdbc13fc76d4",
+  "baseline": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 0,
+    "failed": 60
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.0,
+   "setup_failed": false,
+   "hidden_tail": "cast_with_custom_cycle_cancellation_gap\nFAILED ../hidden-tests/test_hidden.py::TestReport::test_report_renders_positive_and_negative_adjustments\nFAILED ../hidden-tests/test_hidden.py::TestReport::test_report_renders_multi_invoice_cancellation_refunds\nFAILED ../hidden-tests/test_hidden.py::TestReport::test_report_multi_invoice_cancellation_with_no_zero_items\nFAILED ../hidden-tests/test_hidden.py::TestReport::test_report_multi_invoice_custom_cycle_cancellation_refunds\nFAILED ../hidden-tests/test_hidden.py::TestReport::test_report_renders_long_multi_invoice_history\n60 failed, 2 warnings in 0.67s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 60,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "...............             [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-2tkhyttd'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n60 passed, 1 warning in 0.12s\n"
+  }
+ },
+ "contributor_task_06": {
+  "bench": "software_delivery",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "23c520ac718004af4e4e43af9b51b1b3b607856d4f84ab745dfde472378726cb",
+  "baseline": {
+   "public": {
+    "passed": 68,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 0,
+    "failed": 48
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.0,
+   "setup_failed": false,
+   "hidden_tail": "or_restoration.py::test_undo_of_insert_pulls_in_an_anchor_created_inside_it\nFAILED ../hidden-tests/test_undo_anchor_restoration.py::test_undo_of_a_coalesced_run_restores_the_state_the_run_started_from\nFAILED ../hidden-tests/test_undo_anchor_restoration.py::test_undo_of_a_backspace_run_restores_an_anchor_made_part_way_through\nFAILED ../hidden-tests/test_undo_anchor_restoration.py::test_undo_of_replace_restores_anchors_inside_the_replaced_span\nFAILED ../hidden-tests/test_undo_anchor_restoration.py::test_several_anchors_collapsed_by_one_delete_become_distinct_again\n48 failed, 2 warnings in 0.17s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 68,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 48,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "...                         [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-0ix1t2dc'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n48 passed, 1 warning in 0.10s\n"
+  }
+ },
+ "contributor_task_07": {
+  "bench": "software_delivery",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "e0e5ff32df60dd3f440579c97e98e6d43c4b876f155fbae6dc734a4475462398",
+  "baseline": {
+   "public": {
+    "passed": 74,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 0,
+    "failed": 69
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.0,
+   "setup_failed": false,
+   "hidden_tail": "les_correctly_after_the_repair[3]\nFAILED ../hidden-tests/test_seeded_interruptions.py::test_the_cache_settles_correctly_after_the_repair[11]\nFAILED ../hidden-tests/test_seeded_interruptions.py::test_the_cache_settles_correctly_after_the_repair[19]\nFAILED ../hidden-tests/test_seeded_interruptions.py::test_the_cache_settles_correctly_after_the_repair[27]\nFAILED ../hidden-tests/test_seeded_interruptions.py::test_the_cache_settles_correctly_after_the_repair[41]\nFAILED ../hidden-tests/test_seeded_interruptions.py::test_the_cache_settles_correctly_after_the_repair[58]\n69 failed, 2 warnings in 0.21s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 74,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 69,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "........................    [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-g6_jotzo'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n69 passed, 1 warning in 0.11s\n"
+  }
+ },
+ "contributor_task_08": {
+  "bench": "software_delivery",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "776cf9a0af1879a9eeed8c259ca06579bf15181da57a7b6b007d127fc6358eae",
+  "baseline": {
+   "public": {
+    "passed": 85,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 0,
+    "failed": 93
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.0,
+   "setup_failed": false,
+   "hidden_tail": "::test_each_run_skips_exactly_what_the_chain_holds[29]\nFAILED ../hidden-tests/test_seeded_run_orders.py::test_each_run_skips_exactly_what_the_chain_holds[42]\nFAILED ../hidden-tests/test_seeded_run_orders.py::test_the_markers_agree_with_the_chain_at_the_end[5]\nFAILED ../hidden-tests/test_seeded_run_orders.py::test_the_markers_agree_with_the_chain_at_the_end[17]\nFAILED ../hidden-tests/test_seeded_run_orders.py::test_the_markers_agree_with_the_chain_at_the_end[29]\nFAILED ../hidden-tests/test_seeded_run_orders.py::test_the_markers_agree_with_the_chain_at_the_end[42]\n93 failed, 2 warnings in 0.34s\n"
+  },
+  "gold_applied": false,
+  "gold": {
+   "error": "error: corrupt patch at line 460\n"
+  }
+ },
+ "contributor_task_09": {
+  "bench": "software_delivery",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "f1f16250321b4b8a90c53c597de8cc0612db08cef4e0f5e02281d67732f934b6",
+  "baseline": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 0,
+    "failed": 60
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.0,
+   "setup_failed": false,
+   "hidden_tail": "g_node_allows_local_non_borrow_acquisitions\nFAILED ../hidden-tests/test_upstream_draining_and_debt_restructuring.py::test_draining_node_bypassed_in_multi_parent_routing\nFAILED ../hidden-tests/test_upstream_draining_and_debt_restructuring.py::test_draining_node_debt_restructuring_to_multiple_alternates\nFAILED ../hidden-tests/test_upstream_draining_and_debt_restructuring.py::test_draining_node_effective_capacity_excludes_draining_headroom\nFAILED ../hidden-tests/test_upstream_draining_and_debt_restructuring.py::test_drain_node_without_alternates_leaves_debts_intact\n60 failed, 2 warnings in 0.28s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 60,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "...............             [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-3zw84o4r'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n60 passed, 1 warning in 0.11s\n"
+  }
+ },
+ "contributor_task_10": {
+  "bench": "software_delivery",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "de3db9fd7ebb8ddacf46208f882e20e0914dd4f78db342b31f3dd3a1c8991d1f",
+  "baseline": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 0,
+    "failed": 60
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.0,
+   "setup_failed": false,
+   "hidden_tail": "py::test_straggler_triple_same_timestamp_different_ids\nFAILED ../hidden-tests/test_straggler_local_rollback.py::test_straggler_at_exact_timestamp_earlier_priority\nFAILED ../hidden-tests/test_straggler_local_rollback.py::test_straggler_same_timestamp_metrics_count\nFAILED ../hidden-tests/test_straggler_local_rollback.py::test_straggler_middle_of_same_timestamp_batch\nFAILED ../hidden-tests/test_straggler_local_rollback.py::test_successive_descending_stragglers\nFAILED ../hidden-tests/test_straggler_local_rollback.py::test_straggler_same_timestamp_four_events_reverse\n60 failed, 2 warnings in 0.33s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 60,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "...............             [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-yssnj9pv'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n60 passed, 1 warning in 0.08s\n"
+  }
+ },
+ "pdl_swe_edit_merge_019": {
+  "bench": "software_delivery",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "1b4460eaab76395f43826ee928019439160d4b1e29273b1f9c77312c02123d61",
+  "baseline": {
+   "public": {
+    "passed": 42,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 0,
+    "failed": 29
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.0,
+   "setup_failed": false,
+   "hidden_tail": "idden-tests/test_hidden.py::test_one_prevailing_dispute_revives_the_whole_record\nFAILED ../hidden-tests/test_hidden.py::test_every_arrival_permutation_tells_the_same_story\nFAILED ../hidden-tests/test_hidden.py::test_resubmitted_batch_changes_nothing\nFAILED ../hidden-tests/test_hidden.py::test_decisions_first_writes_proportional\nFAILED ../hidden-tests/test_hidden.py::test_seeded_sweep_conflict_lattice - N...\nFAILED ../hidden-tests/test_hidden.py::test_seeded_sweep_retirement_families\nFAILED ../hidden-tests/test_hidden.py::test_seeded_sweep_mixed_estate - NotIm...\n29 failed, 2 warnings in 0.41s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 42,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 29,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "                            [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-27we6ww7'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n29 passed, 1 warning in 0.05s\n"
+  }
+ },
+ "swe_rl_cybersecurity_task_01": {
+  "bench": "cyber_operations",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "247f9a358d88a04704aa41690f1fe88a39079a0c72a34b4d53708cdf2d12b56f",
+  "baseline": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 0,
+    "failed": 60
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.0,
+   "setup_failed": false,
+   "hidden_tail": "enforcement\nFAILED ../hidden-tests/test_transitive_scope_attenuation.py::test_four_tier_transitive_scope_intersection\nFAILED ../hidden-tests/test_transitive_scope_attenuation.py::test_wildcard_narrowing_across_tree_nodes\nFAILED ../hidden-tests/test_transitive_scope_attenuation.py::test_disjoint_scope_intersection_results_in_empty_permissions\nFAILED ../hidden-tests/test_transitive_scope_attenuation.py::test_scope_attenuation_required_scope_verification\nFAILED ../hidden-tests/test_transitive_scope_attenuation.py::test_multiple_ancestor_node_attenuation_combination\n60 failed, 2 warnings in 0.28s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 60,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "...............             [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-x_hnzj0v'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n60 passed, 1 warning in 0.10s\n"
+  }
+ },
+ "swe_rl_cybersecurity_task_02": {
+  "bench": "cyber_operations",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "1e14841c5546682e9bbbd6886b15105a172a0aacd9bf945e8393aef62a0c1898",
+  "baseline": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 0,
+    "failed": 60
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.0,
+   "setup_failed": false,
+   "hidden_tail": "_tree_vulnerabilities.py::test_transitive_three_tier_policy_mapping_with_explicit_policy\nFAILED ../hidden-tests/test_policy_tree_vulnerabilities.py::test_inhibit_any_policy_zero_at_root_blocks_tier1_any_policy\nFAILED ../hidden-tests/test_policy_tree_vulnerabilities.py::test_critical_policy_mapping_to_any_policy_rejected\nFAILED ../hidden-tests/test_policy_tree_vulnerabilities.py::test_critical_policy_mapping_from_any_policy_rejected\nFAILED ../hidden-tests/test_policy_tree_vulnerabilities.py::test_inhibit_policy_mapping_zero_with_critical_mapping_at_tier1_rejected\n60 failed, 2 warnings in 0.42s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 60,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "...............             [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-785ypjjt'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n60 passed, 1 warning in 0.20s\n"
+  }
+ },
+ "swe_rl_cybersecurity_task_03": {
+  "bench": "cyber_operations",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "8602cf2ea5cfe51e2530beda59e26d7b9f6772d0d72cf4e6fe1eb5779b68b7f0",
+  "baseline": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 13,
+    "failed": 93
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.12264150943396226,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.122642,
+   "setup_failed": false,
+   "hidden_tail": "_transactionality.py::test_authorized_or_policy_can_advance_counter_after_round_trip\nFAILED ../hidden-tests/test_state_machine_transactionality.py::test_trial_session_cannot_authorize_unseal\nFAILED ../hidden-tests/test_state_machine_transactionality.py::test_flushed_session_reference_cannot_authorize_unseal\nFAILED ../hidden-tests/test_state_machine_transactionality.py::test_trial_session_cannot_authorize_policy_key_signing\nFAILED ../hidden-tests/test_state_machine_transactionality.py::test_flushed_session_reference_cannot_authorize_policy_key_signing\n93 failed, 13 passed, 2 warnings in 11.54s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 106,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "                          [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-cw3v85m5'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n106 passed, 1 warning in 11.09s\n"
+  }
+ },
+ "swe_rl_cybersecurity_task_04": {
+  "bench": "cyber_operations",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "71879cac1a66a536ef9f836441cf473b4597ffc4af69d9155ad214c8f7896d56",
+  "baseline": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 0,
+    "failed": 60
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.0,
+   "setup_failed": false,
+   "hidden_tail": "erator_fails_closed\nFAILED ../hidden-tests/test_advanced_verification.py::test_56_unsupported_vector_dimension_fails_closed\nFAILED ../hidden-tests/test_advanced_verification.py::test_57_third_party_caveat_with_wildcard_location_rejected\nFAILED ../hidden-tests/test_advanced_verification.py::test_58_merkle_root_computation_differentiates_facts_in_caveat\nFAILED ../hidden-tests/test_advanced_verification.py::test_59_discharge_cannot_forge_ambient_ip_under_wildcard\nFAILED ../hidden-tests/test_advanced_verification.py::test_60_multihop_rule_origin_privilege_escalation\n60 failed, 2 warnings in 0.58s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 60,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "...............             [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-prpqxxmn'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n60 passed, 1 warning in 0.05s\n"
+  }
+ },
+ "swe_rl_cybersecurity_task_05": {
+  "bench": "cyber_operations",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "046368a90409072cef81ccffe62382c6b853196c2850c999c390204f70416b92",
+  "baseline": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 0,
+    "failed": 60
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.0,
+   "setup_failed": false,
+   "hidden_tail": "e_interleavings.py::test_active_rekey_glare_resolves_and_keeps_in_flight_old_packets\nFAILED ../hidden-tests/test_rekey_glare_interleavings.py::test_invalid_hybrid_collision_during_rekey_preserves_live_epoch\nFAILED ../hidden-tests/test_rekey_glare_interleavings.py::test_glare_winner_ignores_valid_collision_without_changing_pending_attempt\nFAILED ../hidden-tests/test_rekey_glare_interleavings.py::test_device_level_glare_emits_exactly_one_response\nFAILED ../hidden-tests/test_rekey_glare_interleavings.py::test_third_epoch_discards_first_epoch_even_before_time_expiry\n60 failed, 2 warnings in 1.09s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 60,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "...............             [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-00sag1ir'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n60 passed, 1 warning in 1.11s\n"
+  }
+ },
+ "swe_rl_cybersecurity_task_06": {
+  "bench": "cyber_operations",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "e117ce6e887746a6ee31e847fc067a4ef75672d3ca074485c88a5c3f835b4dc5",
+  "baseline": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 0,
+    "failed": 60
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.0,
+   "setup_failed": false,
+   "hidden_tail": "registration_rp_id_hash_mismatch_rejected\nFAILED ../hidden-tests/test_hidden_suite.py::test_56_authentication_rp_id_hash_mismatch_without_appid_rejected\nFAILED ../hidden-tests/test_hidden_suite.py::test_57_prf_two_salts_distinct_keys_derived\nFAILED ../hidden-tests/test_hidden_suite.py::test_58_large_blob_key_deterministic_and_unique_per_credential\nFAILED ../hidden-tests/test_hidden_suite.py::test_59_full_multi_protocol_enterprise_state_persistence_and_reload\nFAILED ../hidden-tests/test_hidden_suite.py::test_60_high_volume_attack_simulation_and_journal_integrity\n60 failed, 2 warnings in 10.46s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 60,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "..............             [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-zbukhk1o'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n60 passed, 1 warning in 10.88s\n"
+  }
+ },
+ "swe_rl_cybersecurity_task_07": {
+  "bench": "cyber_operations",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "8b3cb0311d5fea263d4867f1a455e4978c21181b5c8f8aef8b49ea9ebf02112b",
+  "baseline": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 8,
+    "failed": 52
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.13333333333333333,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.133333,
+   "setup_failed": false,
+   "hidden_tail": "_modulus\nFAILED ../hidden-tests/test_vm_exact_reads.py::test_absolute_read_matches_packed_bytes[h3]\nFAILED ../hidden-tests/test_vm_exact_reads.py::test_absolute_read_matches_packed_bytes[h7]\nFAILED ../hidden-tests/test_vm_exact_reads.py::test_absolute_read_matches_packed_bytes[h15]\nFAILED ../hidden-tests/test_vm_exact_reads.py::test_absolute_read_matches_packed_bytes[h23]\nFAILED ../hidden-tests/test_vm_exact_reads.py::test_absolute_read_matches_packed_bytes[h55]\nFAILED ../hidden-tests/test_vm_exact_reads.py::test_absolute_read_matches_packed_bytes[h59]\n52 failed, 8 passed, 2 warnings in 0.25s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 60,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "...............             [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-ewamh9lf'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n60 passed, 1 warning in 0.19s\n"
+  }
+ },
+ "swe_rl_cybersecurity_task_08": {
+  "bench": "cyber_operations",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "4ba23b194d49408d2119e78fd63233cef55ab23580fc959ee71baeb1c8b2f114",
+  "baseline": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 0,
+    "failed": 60
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.0,
+   "setup_failed": false,
+   "hidden_tail": "ts/test_hidden.py::test_threshold_multi_role_segregation_of_duties_three_roles\nFAILED ../hidden-tests/test_hidden.py::test_threshold_multi_role_segregation_of_duties_four_roles\nFAILED ../hidden-tests/test_hidden.py::test_threshold_multi_role_segregation_of_duties_distinct_keys_same_role\nFAILED ../hidden-tests/test_hidden.py::test_threshold_multi_role_two_roles_partial_keys\nFAILED ../hidden-tests/test_hidden.py::test_threshold_multi_role_three_roles_all_keys_missing_third_role\nFAILED ../hidden-tests/test_hidden.py::test_historical_key_revocation_window_acceptance\n60 failed, 2 warnings in 0.83s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 60,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "...............             [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-wx8_vo2j'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n60 passed, 1 warning in 0.07s\n"
+  }
+ },
+ "swe_rl_cybersecurity_task_09": {
+  "bench": "cyber_operations",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "4a7d1ea4227eb478434611fc9586de69af7fcf8367703296971723ac7f152575",
+  "baseline": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 0,
+    "failed": 60
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.0,
+   "setup_failed": false,
+   "hidden_tail": "_resolution_eight_leaf_tree_mixed_blank_nodes\nFAILED ../hidden-tests/test_update_path_copath_secrets.py::test_three_party_group_creation_and_commit\nFAILED ../hidden-tests/test_update_path_copath_secrets.py::test_bob_commits_update_in_epoch_2\nFAILED ../hidden-tests/test_update_path_copath_secrets.py::test_four_party_hierarchical_copath_resolution\nFAILED ../hidden-tests/test_update_path_copath_secrets.py::test_stale_parent_keys_purged_from_my_private_keys\nFAILED ../hidden-tests/test_update_path_copath_secrets.py::test_apply_update_path_missing_copath_secret_raises\n60 failed, 2 warnings in 0.62s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 60,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "...............             [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-ui1n0t6x'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n60 passed, 1 warning in 1.01s\n"
+  }
+ },
+ "swe_rl_cybersecurity_task_10": {
+  "bench": "cyber_operations",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "d967134469401cb8eef4e09eea130d776810569d813431a69c2e7cea59794d87",
+  "baseline": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 0,
+    "failed": 60
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.0,
+   "setup_failed": false,
+   "hidden_tail": "011_key_rollover.py::test_rfc5011_multiple_keys_independent_holddown\nFAILED ../hidden-tests/test_rfc5011_key_rollover.py::test_rfc5011_valid_key_missing_state_on_empty_rrset\nFAILED ../hidden-tests/test_rfc5011_key_rollover.py::test_rfc5011_valid_key_reappears_from_missing\nFAILED ../hidden-tests/test_rfc5011_key_rollover.py::test_rfc5011_remove_holddown_expiration\nFAILED ../hidden-tests/test_rfc5011_key_rollover.py::test_rfc5011_zero_add_holddown_immediate_promotion\nFAILED ../hidden-tests/test_rfc5011_key_rollover.py::test_rfc5011_tampered_self_signature_rejected\n60 failed, 2 warnings in 2.74s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 50,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 60,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "...............             [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-ev0nu0z3'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n60 passed, 1 warning in 2.39s\n"
+  }
+ },
+ "swe_rl_task_02": {
+  "bench": "software_delivery",
+  "image": "pdl-bench/swe:1.0.0",
+  "sha256_repository": "63e9ae0f36824a65de39026d23bf5758ac1d05dc413806d3d75741ef8dd61b00",
+  "baseline": {
+   "public": {
+    "passed": 66,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 0,
+    "failed": 16
+   },
+   "hidden_rc": 1,
+   "hidden_fraction": 0.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 0.0,
+   "setup_failed": false,
+   "hidden_tail": "en-tests/test_hidden.py::test_returning_goods_outside_a_category_deal_leaves_it_alone\nFAILED ../hidden-tests/test_hidden.py::test_successive_returns_settle_to_exactly_what_was_paid\nFAILED ../hidden-tests/test_hidden.py::test_leftover_cents_land_on_the_goods_that_earned_them\nFAILED ../hidden-tests/test_hidden.py::test_campaign_credit_matches_the_discount_actually_given\nFAILED ../hidden-tests/test_hidden.py::test_a_category_percentage_and_a_bundle_share_the_same_goods\nFAILED ../hidden-tests/test_hidden.py::test_everything_reconciles_across_an_order_and_its_returns\n16 failed, 2 warnings in 0.09s\n"
+  },
+  "gold_applied": true,
+  "gold": {
+   "public": {
+    "passed": 66,
+    "failed": 0
+   },
+   "public_rc": 0,
+   "build": 1.0,
+   "build_rc": 0,
+   "hidden": {
+    "passed": 16,
+    "failed": 0
+   },
+   "hidden_rc": 0,
+   "hidden_fraction": 1.0,
+   "regression_fraction": 1.0,
+   "reward_v0_2": 1.0,
+   "setup_failed": false,
+   "hidden_tail": "                            [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469\n  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /hidden-tests/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/hidden-tests/pytest-cache-files-ra_pkumg'\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n16 passed, 1 warning in 0.04s\n"
+  }
+ }
+}

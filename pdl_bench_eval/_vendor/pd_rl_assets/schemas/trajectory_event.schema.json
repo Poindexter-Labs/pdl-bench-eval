@@ -1,0 +1,360 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.poindexterlabs.ai/swe-rl/trajectory-event.schema.json",
+  "title": "Poindexter SWE RL Trajectory Event",
+  "description": "Validates one line of the append-only JSONL trajectory an episode's trajectory_uri points at (DEC-018). Full fidelity per guide Phase 5: every model call, tool call, output, and error is an event. `seq` is monotonically increasing within an episode.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "episode_id",
+    "seq",
+    "timestamp",
+    "type",
+    "payload"
+  ],
+  "properties": {
+    "episode_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "seq": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "episode_start",
+        "model_call",
+        "tool_call",
+        "tool_result",
+        "error",
+        "evaluator_result",
+        "budget_warning",
+        "pr_state",
+        "upstream_landed",
+        "upstream_discovery",
+        "upstream_tamper",
+        "episode_end"
+      ]
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "episode_start"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "required": [
+              "task_id",
+              "task_version",
+              "benchmark_profile_id",
+              "model_provider",
+              "model_name",
+              "random_seed"
+            ],
+            "properties": {
+              "task_id": {
+                "type": "string"
+              },
+              "task_version": {
+                "type": "integer"
+              },
+              "benchmark_profile_id": {
+                "type": "string"
+              },
+              "model_provider": {
+                "type": "string"
+              },
+              "model_name": {
+                "type": "string"
+              },
+              "random_seed": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "model_call"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "required": [
+              "turn",
+              "tokens_in",
+              "tokens_out",
+              "latency_ms"
+            ],
+            "properties": {
+              "turn": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "tokens_in": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "tokens_out": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "cached_tokens_in": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Subset of tokens_in the provider served from a prompt cache. Diagnostic only: tokens_in is the full billed input either way, so the agent budget is unaffected by caching."
+              },
+              "cache_write_tokens": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Subset of tokens_in the provider wrote into a prompt cache. Not reported by every provider."
+              },
+              "latency_ms": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "stop_reason": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "tool_call"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "required": [
+              "turn",
+              "call_id",
+              "tool",
+              "params"
+            ],
+            "properties": {
+              "turn": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "call_id": {
+                "type": "string"
+              },
+              "tool": {
+                "type": "string"
+              },
+              "params": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "tool_result"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "required": [
+              "call_id",
+              "output",
+              "truncated"
+            ],
+            "properties": {
+              "call_id": {
+                "type": "string"
+              },
+              "exit_code": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "output": {
+                "type": "string"
+              },
+              "truncated": {
+                "type": "boolean"
+              },
+              "duration_ms": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "error"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "required": [
+              "message",
+              "recoverable"
+            ],
+            "properties": {
+              "message": {
+                "type": "string"
+              },
+              "recoverable": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "evaluator_result"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "hidden_tests_passed": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "hidden_tests_total": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "regression_score": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "build_quality_score": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "build_command_rc": {
+                "type": "integer",
+                "description": "Exit code of build_command, recorded only when it failed. A zero in a scored bucket should carry its own evidence (P1-025)."
+              },
+              "build_output_tail": {
+                "type": "string",
+                "description": "Last ~2000 characters of build_command output, recorded only when it failed."
+              },
+              "property_gate_passed": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "property_gate_total": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              }
+            },
+            "anyOf": [
+              {
+                "required": [
+                  "hidden_tests_passed",
+                  "hidden_tests_total"
+                ]
+              },
+              {
+                "required": [
+                  "property_gate_passed",
+                  "property_gate_total"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "episode_end"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "required": [
+              "termination_reason",
+              "outcome"
+            ],
+            "properties": {
+              "termination_reason": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "outcome": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

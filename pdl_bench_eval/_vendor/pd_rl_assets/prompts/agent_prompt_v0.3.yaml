@@ -1,0 +1,47 @@
+prompt_id: agent_prompt_v0.3
+status: approved
+target_contract: evaluation_contract_v0.2
+tool_schema: tools_v0.1
+# SWE-framed: names an issue, a repository and hidden tests. Declared so the
+# console cannot offer it for a document job (it would misdescribe the task).
+environments: [swe]
+
+# Rendered by the agent adapter at episode start. {placeholders} are filled
+# from the task manifest, active profile, and contract. This gives the
+# episode-record field prompt_version a concrete, versioned referent (DEC-017).
+#
+# v0.3 (DEC-055 item 1, ratified 2026-08-03; authored 2026-08-08 for the
+# mini-pilot comparison arm): promotes v0.2's workspace-state sentence into a
+# benchmark prompt version. Enforcement is unchanged (DEC-035: the final
+# workspace state is policed either way); this version WARNS about it, so
+# scores read capability rather than unwarned-convention compliance. The
+# pilot_v0.2 record remains v0.1; rows under different prompt versions are
+# not directly comparable.
+system_template: |
+  You are an autonomous software engineer working in an isolated workspace at
+  {working_directory}. Your goal is to resolve the issue below by editing the
+  repository, then submit.
+
+  Issue:
+  {issue_text}
+
+  Rules:
+  - You may only modify files matching: {allowed_paths}
+  - You must not modify: {forbidden_paths}
+  - The policy applies to the final workspace state, not just your patch:
+    every file you create also counts, so delete any scratch or reproduction
+    files outside the allowed paths before submitting.
+  - There is no network access.
+  - Public tests can be run with: {public_command}
+  - You have at most {max_turns} turns and {max_tokens_total} total tokens.
+  - When you believe the issue is resolved, call the submit tool. The final
+    evaluation runs hidden tests you cannot see.
+
+variables:
+  - working_directory
+  - issue_text
+  - allowed_paths
+  - forbidden_paths
+  - public_command
+  - max_turns
+  - max_tokens_total

@@ -1,0 +1,167 @@
+contract_id: evaluation_contract_v0.2
+status: approved
+
+episode:
+  definition: >
+    One attempt by one configured AI agent to solve one versioned
+    software-engineering task in a fresh isolated workspace.
+
+  starts_when: task_setup_succeeds
+
+  ends_when:
+    - agent_submits
+    - max_turns_reached
+    - token_budget_reached
+    - wall_clock_timeout_reached
+    - unrecoverable_agent_error
+    - infrastructure_failure
+
+network:
+  mode: disabled
+  agent_outbound_access: false
+  cloud_metadata_access: false
+
+profile_policy:
+  profile_required: true
+
+  required_profile_sections:
+    - agent_budget
+    - timing
+    - resources
+    - terminal_limits
+
+  hard_safety_ceilings:
+    # Raised 200 -> 1000 (2026-08-27, user ruling) to future-proof ultra
+    # long-horizon work. 200 was set when 250K tokens was the standing budget
+    # and it had already become the binding constraint: python_standard_2m_v0.1
+    # sits AT this ceiling and says so in its own comments ("TURNS ARE AT THE
+    # CONTRACT'S HARD CEILING (200) AND CANNOT SCALE WITH THE BUDGET"), which
+    # meant the next budget step up had nowhere to go. This is the platform's
+    # hard SAFETY ceiling, not a budget: no existing task's runway changes,
+    # because tasks take their budget from their profile and every current
+    # profile declares 40-200 turns explicitly. It only stops the validator
+    # rejecting profiles above 200. schemas/profile.schema.json carries an
+    # independent maximum that was moved in the same commit.
+    max_turns: 1000
+    # Raised 500000 -> 10000000 (2026-08-15). The 500K figure was the
+    # standing BUDGET CONTRACT for frontier gating; this field is the
+    # platform's hard SAFETY ceiling, and the two were previously the same
+    # number. Raising it admits the 1M profile (and headroom above it)
+    # without a per-task override. NOTE: this does not change any task's
+    # budget — tasks take their budget from their profile, and every
+    # existing task still resolves to the 250K python_standard_v0.1 default
+    # or its own audited override. It only stops the validator rejecting
+    # profiles above 500K.
+    #
+    # Raised 10000000 -> 50000000 (2026-09-09) for python_qa_50m_v0.1, a
+    # TEMPORARY profile standing in for the console's unwired token-budget
+    # override (P1-034). Same reasoning as every raise before it: this is the
+    # platform's hard SAFETY ceiling, not a budget, and no task's runway
+    # changes — tasks take their budget from their profile. It only stops the
+    # validator rejecting profiles above 10M.
+    #
+    # REVERT THIS with the profile. Once the override is wired, nothing needs a
+    # 50M profile and this should go back to 10000000 unless another profile
+    # has come to depend on it by then.
+    max_tokens_total: 50000000
+    # Raised 180 -> 720 (2026-08-27, user ruling), same reasoning as max_turns
+    # above: python_standard_1m_v0.1 and _2m_v0.1 both sit AT the old ceiling,
+    # so the clock could not scale with the budget either. Again a safety
+    # ceiling, not a budget — no profile's timing changes here.
+    #
+    # OPERATIONAL CAVEAT, not enforced by this file: the `episodes-gvisor`
+    # pool is Spot. A 720-minute episode is very likely to be preempted, which
+    # records as void_infra_failure, so genuinely long episodes need an
+    # on-demand pool before the headroom is usable. POD_READY_TIMEOUT_S (420)
+    # and the per-command terminal_limits are unaffected — they are separate
+    # clocks driven by the profile, not by this ceiling.
+    max_episode_timeout_minutes: 720
+    max_cpu: 16
+    max_memory_gib: 64
+    max_writable_disk_gib: 200
+    max_processes: 512
+
+# Terminal *semantics* remain a global invariant (not per-profile). The
+# numeric per-command timeouts move into each profile's terminal_limits.
+terminal:
+  persistent_workspace: true
+  persistent_shell: false
+  interactive_terminal: false
+  default_working_directory: /workspace/repo
+  background_processes: prohibited
+  kill_process_tree_on_timeout: true
+
+evaluation:
+  hidden_tests_visible_to_agent: false
+  evaluator_runs_after_agent_stops: true
+  evaluator_identity_separate_from_agent: true
+
+  # Absolute path where the evaluator's container mounts a task's hidden
+  # bundle; manifests' hidden_command paths refer to this location. The
+  # profile's ecosystem.evaluator_env is applied when hidden tests run
+  # (DEC-013).
+  hidden_bundle_mount_point: /hidden-tests
+
+  validity_requirements:
+    - no_policy_violation
+    - no_hidden_test_access
+    - patch_applies
+    - forbidden_files_unchanged
+
+  scoring_policy_reference: scoring_v0.1
+
+agent_interface:
+  # The agent-visible tool vocabulary is defined in a versioned spec
+  # (contracts/tools_v0.1.yaml); tool_schema_version is recorded per episode.
+  tool_schema_reference: tools_v0.1
+
+outcomes:
+  # Episode-level classification, distinct from episode.ends_when (the agent-loop
+  # termination vocabulary). Setup failures occur before the loop and evaluator
+  # failures after it, so outcome is tracked separately. See DEC-008.
+  classes:
+    - valid_scored
+    - invalid_agent_fault
+    - void_setup_failure
+    - void_infra_failure
+    - void_evaluator_failure
+  scored_classes:
+    - valid_scored
+  leaderboard_classes:
+    - valid_scored
+    - invalid_agent_fault
+  retryable_classes:
+    - void_setup_failure
+    - void_infra_failure
+    - void_evaluator_failure
+  budget_exhaustion_scored: true
+
+reproducibility:
+  require_repository_commit: true
+  require_repository_checksum: true
+  require_environment_image_digest: true
+  require_evaluator_image_digest: true
+  require_dependency_lockfiles: true
+
+  record:
+    - task_version
+    - model_provider
+    - model_name
+    - model_version
+    - model_parameters
+    - prompt_version
+    - tool_schema_version
+    - random_seed
+    - environment_image_digest
+    - evaluator_version
+    - evaluator_image_digest
+    - scoring_version
+    - benchmark_profile_id
+
+task_overrides:
+  resource_overrides: allowed_with_reason
+  timeout_overrides: allowed_with_reason
+  action_budget_overrides: allowed_with_reason
+  network_overrides: prohibited
+  hidden_test_visibility_overrides: prohibited
+  terminal_semantics_overrides: prohibited

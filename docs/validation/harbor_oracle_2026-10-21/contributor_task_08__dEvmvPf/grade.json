@@ -1,0 +1,24 @@
+{
+ "reward": 1.0,
+ "outcome": "valid_scored",
+ "passed": true,
+ "hidden_tests_passed": 93,
+ "hidden_tests_total": 93,
+ "regression_test_fraction": 1.0,
+ "build_quality": 1.0,
+ "build_rc": 0,
+ "public_tests_passed": 85,
+ "public_tests_total": 85,
+ "changed_files": [
+  "src/capture.py",
+  "src/coverage.py",
+  "src/ledger.py",
+  "src/manifest.py",
+  "src/protection.py",
+  "src/restore.py",
+  "src/runner.py",
+  "src/vault.py"
+ ],
+ "notes": [],
+ "scoring_policy": "scoring_v0.2"
+}

@@ -1,0 +1,108 @@
+scoring_policy_id: scoring_v0.2
+status: draft
+target_contract: evaluation_contract_v0.2
+
+# TRAINING-ORIENTED SIBLING of scoring_v0.1. Same buckets, same weights,
+# different aggregation: regression and build credit are SCALED BY hidden-test
+# progress instead of being awarded unconditionally.
+#
+# THIS DOES NOT SUPERSEDE scoring_v0.1 DESPITE THE VERSION NUMBER. The
+# contract's evaluation.scoring_policy_reference still names v0.1, so the
+# benchmark default is unchanged and every existing row keeps its meaning.
+# Rows under different scoring versions are not comparable (P1-018): a v0.2
+# number must never be reported beside a v0.1 number without saying so.
+#
+# WHY (DEC-028, the one hard gate before any RL training run): under v0.1 a
+# do-nothing submission scores 0.20 — not a floor constant anywhere in the
+# code, but the arithmetic of full regression (0.15) and build (0.05) credit
+# for an empty patch:
+#
+#     0.80x0 + 0.15x1 + 0.05x1 = 0.20
+#
+# For a benchmark that is a useful anchor. For RL it makes "submit
+# immediately" a positive-return action, i.e. a lazy-policy local optimum.
+# Lowering the additive weights would not fix it: ANY unconditional credit
+# keeps inaction profitable, so the fix is conditioning, not magnitude.
+#
+# WHAT THE FIELD DOES: SWE-bench and every descendant treat PASS_TO_PASS as a
+# conjunctive requirement rather than a scored bucket — resolution needs all
+# F2P and all P2P, so "did not break anything" earns zero on its own. DeepSWE
+# (open SOTA RL coding agent) is binary on the same basis. SWE Atlas — a
+# benchmark the customer named as a target — is binary too, and describes its
+# regression check as "a necessary but insufficient condition". A 0.20 noop is
+# generous by every one of those references.
+#
+# WHY NOT SIMPLY BINARY: binary reward is known to waste signal — DeepSWE
+# reports ~24.3% of truncated trajectories actually resolve the issue while
+# scoring zero, and the reward-shaping literature argues for a richer partial
+# ordering that can separate rollouts of similar quality. Partial credit is a
+# deliberate deviation; its PLACEMENT was the defect.
+#
+# WHY NOT A HARD GATE ON hidden > 0: an indicator gate ("award regression and
+# build only once one hidden test passes") also zeroes the noop, but puts a
+# 0.20 discontinuity at the first passing test — on a 60-test suite, going
+# from 0 to 1 passing test would jump the reward from 0.00 to 0.21. That is a
+# sharp edge to hand a policy gradient. Scaling is monotone and smooth in
+# hidden progress and has no such cliff (user ruling 2026-08-27).
+
+weights:
+  hidden_test_fraction: 0.80
+  regression_test_fraction: 0.15
+  build_quality: 0.05
+
+buckets:
+  hidden_test_fraction:
+    description: >
+      Fraction of hidden tests that pass after the agent's patch is applied
+      and the evaluator runs. Under this policy it is also the progress term
+      every other bucket is scaled by, so an episode that fixes nothing scores
+      zero however tidy it left the repository.
+    sub_score: passed_hidden_tests / total_hidden_tests
+
+  regression_test_fraction:
+    description: >
+      Fraction of the pre-existing public/regression suite that still passes
+      after the patch. Credit is proportional to hidden-test progress, so
+      breaking unrelated behavior still costs — it simply cannot be earned by
+      doing nothing.
+    sub_score: passed_regression_tests / total_regression_tests
+
+  build_quality:
+    description: >
+      Normalized [0, 1] result of the build/quality gate defined by the task
+      manifest's evaluation.build_command. Absent means the bucket is absent
+      and weights renormalize.
+    sub_score: build_quality_gate_result
+
+# The aggregation rule. Absent (as in scoring_v0.1) means the plain weighted
+# sum, so this field is purely additive and no existing policy changes.
+#
+#   reward = h * ( w_h + SUM_{k != h} w_k * v_k ) / ( w_h + SUM_{k != h} w_k )
+#
+# The denominator is the empty-bucket renormalization, so gold still scores
+# exactly 1.0 whether or not a task has a build gate:
+#
+#   noop        h=0                  -> 0.00   (was 0.20)
+#   half suite  h=0.5, r=1, b=1      -> 0.50   (was 0.60)
+#   half, broke h=0.5, r=0.5, b=1    -> 0.4625 (was 0.525)
+#   gold        h=1, r=1, b=1        -> 1.00   (unchanged)
+aggregation:
+  mode: progress_scaled
+  progress_bucket: hidden_test_fraction
+  description: >
+    Every bucket's credit is multiplied by the progress bucket's sub-score.
+    The progress bucket must be present for a task scored under this policy;
+    its absence is a task/policy mismatch and the runner refuses rather than
+    silently falling back to a weighted sum.
+
+empty_bucket_policy:
+  mode: renormalize
+  description: >
+    If a bucket is absent for a task, drop it and renormalize the remaining
+    weights so they sum to 1.0. A task with zero scorable buckets is treated
+    as invalid, not as a zero score. Renormalization happens inside the
+    parenthesis above, which is what keeps gold at 1.0 for a task with no
+    build gate.
+  zero_scorable_buckets: task_invalid
+
+applies_only_to_valid_episodes: true

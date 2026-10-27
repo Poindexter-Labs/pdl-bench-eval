@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pdl-bench-eval"
+version = "0.1.0"
+description = "Reference evaluator for PDL-Bench: grades repository patches, SWEQnA answers and single-turn Q&A responses exactly as Poindexter Labs' published results were graded."
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.10"
+authors = [{ name = "Poindexter Labs", email = "data@poindexterlabs.ai" }]
+dependencies = [
+  "pyyaml>=6.0",
+  "huggingface_hub>=0.25",
+  "pandas>=2.0",
+  "pyarrow>=14.0",
+  "jsonschema>=4.18",
+  "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+judges = ["openai>=1.40,<=3.35.1", "anthropic>=0.40,<=1.17.0", "google-genai>=1.0,<=2.32.0"]   # upper bounds = versions the validation runs used
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+pdl-bench-eval = "pdl_bench_eval.cli:main"
+pdl-bench-replicate = "pdl_bench_eval.replication.cli:main"
+
+[project.urls]
+Dataset = "https://huggingface.co/datasets/Poindexter-Labs/PDL-Bench"
+
+[tool.setuptools.packages.find]
+include = ["pdl_bench_eval*"]
+
+[tool.setuptools.package-data]
+pdl_bench_eval = ["policies/*.yaml", "calibration.json", "eval_plugins/*.py", "_vendor/SOURCE_MANIFEST.json", "_vendor/pd_rl_assets/*/*", "replication/presets/*.json", "replication/sandbox/*/Dockerfile"]

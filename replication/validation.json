@@ -1,0 +1,112 @@
+{
+  "date": "2026-10-27",
+  "docker_build": "passed",
+  "offline_plan": "passed",
+  "offline_tests_passed": 10,
+  "evaluator_unit_tests_passed": 15,
+  "calibration": {
+    "software-delivery": {
+      "gold_tasks": 20,
+      "gold_at_1.0": 17,
+      "gold_other": {
+        "pdl_qna_access_path_planning_017": {
+          "status": "GRADED",
+          "outcome": "valid_scored",
+          "reward": 0.961538
+        },
+        "pdl_qna_signed_package_resolution_014": {
+          "status": "GRADED",
+          "outcome": "valid_scored",
+          "reward": 0.96
+        },
+        "pdl_qna_incremental_build_promotion_015": {
+          "status": "GRADED",
+          "outcome": "valid_scored",
+          "reward": 0.96
+        }
+      },
+      "noop_tasks": 20,
+      "noop_at_0.0": 20,
+      "noop_nonzero": {},
+      "ungraded": {}
+    },
+    "cyber-operations": {
+      "gold_tasks": 10,
+      "gold_at_1.0": 10,
+      "gold_other": {},
+      "noop_tasks": 10,
+      "noop_at_0.0": 8,
+      "noop_nonzero": {
+        "swe_rl_cybersecurity_task_07": 0.133333,
+        "swe_rl_cybersecurity_task_03": 0.122642
+      },
+      "ungraded": {}
+    }
+  },
+  "live_smokes": [
+    {
+      "model": "gpt-6-astra",
+      "route": "openai-azure:swedencentral",
+      "model_version": "gpt-6-astra",
+      "task": "swe_rl_task_02",
+      "status": "GRADED",
+      "termination_reason": "agent_submits",
+      "outcome": "valid_scored",
+      "reward": 1.0,
+      "tool_calls": 17,
+      "tokens_in": 166602,
+      "tokens_out": 11427,
+      "duration_s": 299,
+      "judge_panel": null,
+      "prompt_version": "agent_prompt_v0.3",
+      "profile": "python_standard_2m_v0.1",
+      "scoring": "scoring_v0.2"
+    },
+    {
+      "model": "gemini-3.8-flash",
+      "route": "google-vertex:global",
+      "model_version": "gemini-3.8-flash",
+      "task": "swe_rl_task_02",
+      "status": "GRADED",
+      "termination_reason": "token_budget_reached",
+      "outcome": "valid_scored",
+      "reward": 1.0,
+      "tool_calls": 28,
+      "tokens_in": 1982496,
+      "tokens_out": 130449,
+      "duration_s": 1017,
+      "judge_panel": null,
+      "prompt_version": "agent_prompt_v0.3",
+      "profile": "python_standard_2m_v0.1",
+      "scoring": "scoring_v0.2"
+    },
+    {
+      "model": "claude-fable-5-1",
+      "route": "anthropic:api",
+      "model_version": "claude-fable-5-1",
+      "task": "pdl_qna_close_provenance_010",
+      "status": "GRADED",
+      "termination_reason": "agent_submits",
+      "outcome": "valid_scored",
+      "reward": 1.0,
+      "tool_calls": 13,
+      "tokens_in": 451026,
+      "tokens_out": 24082,
+      "duration_s": 380,
+      "judge_panel": [
+        "gemini-3.1-pro-preview",
+        "claude-opus-5",
+        "gpt-5.6-sol"
+      ],
+      "prompt_version": "agent_prompt_qa_v0.1",
+      "profile": "python_qa_2m_v0.1",
+      "scoring": "scoring_llm_v0.3"
+    }
+  ],
+  "live_model_episodes_for_publication": 3,
+  "expected_attempts_on_full_default_run": {
+    "software-delivery": 800,
+    "cyber-operations": 400
+  },
+  "note": "Calibration runs the scripted gold and noop baselines through the complete path (sandbox episode, patch freeze, grader); live smokes are one paid episode per reference route and are not benchmark results."
+}

@@ -1,0 +1,109 @@
+{
+  "id": "cyber-operations",
+  "version": 1,
+  "basis": "The configurations behind the published report (docs/REPRODUCTION.md): every setting is read from the recorded episodes of the named console jobs in the episode table, not inferred from a sheet. Prompt, tool schema, profile budgets and scoring policy are the exact versioned artefacts those episodes recorded; model parameters are what the adapters send and are listed as recorded for comparison.",
+  "selection_evidence": {
+    "executable": {
+      "jobs": [
+        "rlj-20260911-181246-68ed7c",
+        "rlj-20260925-210731-44bc8a",
+        "rlj-20261013-232626-6fc6bd"
+      ],
+      "models": {
+        "gpt-6-astra": "rlj-20260911-181246-68ed7c",
+        "claude-fable-5-1": "rlj-20260911-181246-68ed7c",
+        "gemini-3.8-flash": "rlj-20260911-181246-68ed7c",
+        "claude-opus-5-5": "rlj-20260925-210731-44bc8a",
+        "gemini-4-argon": "rlj-20261013-232626-6fc6bd"
+      }
+    }
+  },
+  "settings_evidence": "settings-evidence/cyber-operations.json",
+  "families": {
+    "executable": {
+      "kind": "executable",
+      "prompt": "agent_prompt_v0.3",
+      "profile": "python_standard_2m_v0.1",
+      "scoring": "scoring_v0.2",
+      "pass_threshold": 0.95,
+      "sandbox_image": "python-standard",
+      "evaluator_image": "pdl-bench/swe:1.0.0",
+      "note": "Manifests pin python_standard_1m_v0.1; the published report ran the 2M profile as an operator override."
+    }
+  },
+  "models": [
+    {
+      "id": "gpt-6-astra",
+      "provider": "openai",
+      "endpoint": "azure",
+      "model": "gpt-6-astra",
+      "attempts": 8,
+      "route_label": "openai-azure:swedencentral",
+      "recorded_model_parameters": {
+        "api_mode": "responses",
+        "sampling": "provider-default"
+      }
+    },
+    {
+      "id": "claude-fable-5-1",
+      "provider": "anthropic",
+      "endpoint": null,
+      "model": "claude-fable-5-1",
+      "attempts": 8,
+      "route_label": "anthropic:api",
+      "recorded_model_parameters": {
+        "max_tokens": 8192,
+        "prompt_cache": "ephemeral"
+      }
+    },
+    {
+      "id": "claude-opus-5-5",
+      "provider": "anthropic",
+      "endpoint": null,
+      "model": "claude-opus-5-5",
+      "attempts": 8,
+      "route_label": "anthropic:api",
+      "recorded_model_parameters": {
+        "max_tokens": 8192,
+        "prompt_cache": "ephemeral"
+      }
+    },
+    {
+      "id": "gemini-3.8-flash",
+      "provider": "gemini",
+      "endpoint": "vertex:global",
+      "model": "gemini-3.8-flash",
+      "attempts": 8,
+      "route_label": "google-vertex:global",
+      "recorded_model_parameters": {
+        "temperature": 1
+      }
+    },
+    {
+      "id": "gemini-4-argon",
+      "provider": "gemini",
+      "endpoint": "vertex:global",
+      "model": "gemini-4-argon",
+      "attempts": 8,
+      "route_label": "google-vertex:global",
+      "recorded_model_parameters": {
+        "temperature": 1
+      }
+    }
+  ],
+  "baselines": [
+    {
+      "id": "gold",
+      "provider": "gold",
+      "attempts": 1,
+      "note": "reference patch via write_patch; expected reward 1.0"
+    },
+    {
+      "id": "noop",
+      "provider": "noop",
+      "attempts": 1,
+      "note": "submits at once; expected reward 0.0 under scoring_v0.2"
+    }
+  ],
+  "evidence_note": "The Gemini 4 Argon job covered both benchmarks and includes re-runs after the 2026-10-14 rate-limit fixes; voided episodes are excluded from the published statistic."
+}

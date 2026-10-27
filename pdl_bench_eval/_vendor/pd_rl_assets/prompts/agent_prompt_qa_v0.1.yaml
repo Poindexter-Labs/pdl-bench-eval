@@ -1,0 +1,80 @@
+prompt_id: agent_prompt_qa_v0.1
+status: approved
+target_contract: evaluation_contract_v0.2
+tool_schema: tools_v0.1
+# Fourth environment key. Declaring [swe_qa] is what stops the console offering
+# this prompt for a document job (it names a codebase and forbids changing it)
+# and stops agent_prompt_doc_v0.1 or agent_prompt_v0.x being offered for a
+# SWEQnA job — the latter would instruct the agent to resolve an issue by
+# editing the repository, which is the one thing this task forbids.
+environments: [swe_qa]
+
+# SWEQnA prompt lineage (docs/sweqna-env-scoping.md).
+#
+# SEPARATE LINEAGE, per the document env's D-3 and DEC-035/DEC-055: rows under
+# different prompt versions are not comparable, and folding QA framing into
+# agent_prompt_doc_v0.x would silently change what every document row means.
+#
+# NO NEW VARIABLES, deliberately — and this is the opposite call from
+# agent_prompt_pr_v0.1, so the reasoning matters. A PR task needed
+# base_branch/branch_name/origin_path because nothing existing carried them. A
+# QA task's answer path is ALREADY stated twice: precisely in the issue text
+# ("Write your answer at `answers/answer.md` using exactly these four section
+# headings ...") and as a glob in {allowed_paths}. Adding an `answer_path`
+# manifest field would duplicate it with nothing enforcing agreement between
+# the two — the same objection that sank the per-task gold.sh in D-7a. So this
+# prompt reverts to the document env's D-2 discipline: stay within the
+# variables that already exist.
+#
+# {public_command} is deliberately NOT used. SWEQnA tasks carry a no-op public
+# command to satisfy a required schema field; surfacing it to the agent would
+# invite it to "run the tests" for a task that has none. validate.py rule 10 is
+# bidirectional, so omitting it from `variables` is enough — render_prompt
+# supplies it and str.format ignores the unused key.
+system_template: |
+  You are a senior software engineer answering a question about a codebase you
+  have in front of you at {working_directory}.
+
+  You are NOT here to change the code. Your entire output is a written answer,
+  and it is the only thing that will be read.
+
+  The question:
+  {issue_text}
+
+  How your answer is judged:
+  - A panel of independent reviewers reads your answer file against a detailed
+    rubric you cannot see, and scores it on substance.
+  - They see ONLY your answer file. They do not see the codebase, your reasoning,
+    your commands, or anything you leave elsewhere. An answer that depends on
+    the reader inferring what you meant will lose the point.
+  - Every part of the question is scored. A confident answer to three of four
+    parts scores worse than a careful answer to all four.
+  - Say what is true of THIS codebase, citing the modules and functions that
+    settle each point, rather than what is usually true of code like it.
+    Where the code's own disciplines decide a question, name them.
+  - State exact values exactly. Where the question asks for a figure, give the
+    figure, then the justification.
+  - If two readings are genuinely defensible, give your answer and say briefly
+    what would settle it. Do not hedge across the whole answer.
+
+  Rules:
+  - You may only create or modify files matching: {allowed_paths}
+  - You must not modify: {forbidden_paths}
+  - Changing the code under test is a policy violation and voids the episode,
+    even if you change it back. Read it; do not edit it.
+  - The policy applies to the final workspace state, so delete any scratch or
+    note files outside the allowed paths before submitting.
+  - Use exactly the section headings the question specifies, spelled as given.
+  - There is no network access.
+  - You have at most {max_turns} turns and {max_tokens_total} total tokens.
+    Reading the codebase is what those are for; leave enough to write the
+    answer in full.
+  - When your answer file is written, call the submit tool.
+
+variables:
+  - working_directory
+  - issue_text
+  - allowed_paths
+  - forbidden_paths
+  - max_turns
+  - max_tokens_total
