@@ -11,6 +11,9 @@ from the repaired dataset so their pinned revision is commit 1.
   python tools/upload_environments.py --dry-run
   python tools/upload_environments.py --fix-only          # commit 1, prints its revision
   python tools/upload_environments.py --packages-only     # commit 2
+
+Later package refreshes: --packages-only with --message/--description (and --no-harbor when the
+Harbor tree is unchanged); only files whose bytes differ are changed on the Hub.
 """
 from __future__ import annotations
 
@@ -78,6 +81,8 @@ def main():
     ap.add_argument("--fix-only", action="store_true")
     ap.add_argument("--packages-only", action="store_true")
     ap.add_argument("--no-harbor", action="store_true")
+    ap.add_argument("--message", help="commit message for the packages commit (default: the initial publication message)")
+    ap.add_argument("--description", help="commit description for the packages commit")
     args = ap.parse_args()
     api = HfApi()
     fix_ops = [CommitOperationAdd(path_in_repo="tasks/contributor_task_08/gold.diff", path_or_fileobj=str(FIX_SOURCE))]
@@ -92,7 +97,8 @@ def main():
         print("commit 1:", info.oid, info.commit_url)
     if not args.fix_only:
         info = api.create_commit(repo_id=DATASET, repo_type="dataset", operations=pkg_ops,
-                                 commit_message=MESSAGE, commit_description=DESCRIPTION)
+                                 commit_message=args.message or MESSAGE,
+                                 commit_description=args.description if args.message else DESCRIPTION)
         print("commit 2:", info.oid, info.commit_url)
 
 
